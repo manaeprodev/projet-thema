@@ -1,0 +1,9 @@
+ErrorDocument 404 /admin/login.php
+ErrorDocument 403 /admin/login.php
+ErrorDocument 401 /admin/login.php
+ErrorDocument 500 /admin/login.php
+
+SetEnv SERVER "37.187.158.184"
+SetEnv USER_BDD "tony_alex"
+SetEnv PASSWORD_BDD "L_770wm8d"
+SetEnv BDD_NAME "jeu_rugby"
