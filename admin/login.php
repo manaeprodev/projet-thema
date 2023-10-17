@@ -8,7 +8,6 @@ $resultat = $connexion->query($requete);
 if ($resultat->num_rows == 1) {
     $row = $resultat->fetch_assoc();
     $lastConnectedDate = $row['last_connected_date'];
-    echo "Dernière date de connexion : $lastConnectedDate";
 } else {
     // L'utilisateur n'est pas authentifié
     echo "Échec de la connexion. Vérifiez votre nom d'utilisateur et votre mot de passe.";
@@ -34,6 +33,7 @@ if ($resultat->num_rows == 1) {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             text-align: center;
+            margin-bottom: 20px;
         }
 
         h2 {
