@@ -1,6 +1,28 @@
 const { Storage } = require('@google-cloud/storage');
 const puppeteer  = require('puppeteer');
 
+
+function getDateFormatted() {
+    const today = new Date();
+
+    // Récupération du jour, du mois et de l'année
+    let day = today.getDate();
+    let month = today.getMonth() + 1; // Les mois commencent à 0 (janvier est 0)
+    let year = today.getFullYear();
+
+    // Formatage pour avoir deux chiffres pour le jour et le mois si nécessaire (ajout du zéro)
+    if (day < 10) {
+        day = `0${day}`;
+    }
+    if (month < 10) {
+        month = `0${month}`;
+    }
+
+    // Formatage final dd/mm/yyyy
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+}
+
 const main = async (req, res) => {
     const resultatLotoUrl = 'https://www.fdj.fr/jeux-de-tirage/loto/resultats';
     console.log('Connexion au site loto :');
@@ -25,9 +47,12 @@ const main = async (req, res) => {
     await browser.close(); //On ferme le browser 
 }
 
-
 try{
+
     main();
+    const formattedDate = getDateFormatted();
+    console.log(formattedDate); // Affiche la date du jour au format dd/mm/yyyy
+
 } catch(error){
     console.log(error);
 }
