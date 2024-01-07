@@ -1,165 +1,85 @@
 <?php
+$titlePage = "Inscription";
 // Traitement du formulaire d'inscription ici
+
+require_once("components/connexion.php");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
+    $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
+    $luckyNumber = htmlspecialchars($_POST['luckyNumber']);
 
+
+    $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
     // Vous pouvez ajouter ici le code pour enregistrer les données dans une base de données, par exemple
 
     // Redirection vers une page de succès ou autre
     header("Location: inscription_reussie.php");
     exit();
 }
+
+function checkForm($username, $pwd, $confirmPwd, $lckNb)
+{
+    $validForm = true;
+
+    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
+    $stmt = $connexion->prepare($requete);
+    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $nbLignes = $stmt->rowCount();
+
+    //L'username doit être unique en BDD
+    if ($nbLignes > 0) {
+        $validForm = false;
+    }
+
+    //L'username doit être MAJUSCULES minuscules chiffres underscores uniquement
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        $validForm = false;
+    }
+
+    //Les deux mots de passe doivent être identiques
+    if ($pwd !== $confirmPwd) {
+        $validForm = false;
+    }
+
+    //Le mot de passe doit faire plus de 6 caractères
+    if (strlen($pwd) < 6) {
+        $validForm = false;
+    }
+
+    //Le numéro chance doit être entre 1 et 9
+    if (!($lckNb >=1 && $lckNb <=9)) {
+        $validForm = false;
+    }
+
+    //Si le formulaire n'est pas valide suite aux vérifs, on renvoie au register
+    if(!$validForm) {
+        header("Location: register.php?error=invalidInput");
+    }
+    var_dump($_POST);die();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Page</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        nav {
-            background-color: #007BFF;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 0 5px;
-        }
-
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 400px;
-            margin: 100px auto 100px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            background-color: #007BFF;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        .file-input-wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-        }
-
-        .file-input-wrapper .btn-upload {
-            border: 2px solid #007BFF;
-            color: #007BFF;
-            background-color: #fff;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .file-input-wrapper .btn-upload:hover {
-            background-color: #007BFF;
-            color: #fff;
-        }
-
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 16px;
-        }
-
-        p {
-            margin-top: 20px;
-        }
-
-        .italic{
-            font-style: italic;
-            color: darkgrey;
-        }
-
-    </style>
+    <?php include "components/header.php";?>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<?php include "header.php";?>
 <div class="container">
     <h2>Formulaire d'Inscription</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <input type="text" name="username" placeholder="Nom d'utilisateur *" required>
         <input type="password" name="password" placeholder="Mot de passe *" required>
-        <input type="password" name="password" placeholder="Confirmer le mot de passe *" required>
-        <label for="numericValue">Votre numéro chance favori : *</label>
-        <select name="numericValue" id="numericValue" required>
+        <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe *" required>
+        <label for="luckyNumber">Votre numéro chance favori : *</label>
+        <select name="luckyNumber" id="luckyNumber" required>
             <?php
             for ($i = 1; $i <= 9; $i++) {
                 echo "<option value=\"$i\">$i</option>";
@@ -180,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p class="italic">*Les champs marqués d'un astérisque sont obligatoires.</p>
 </div>
 
-<?php include "footer.php";?>
+<?php include "components/footer.php";?>
 
 </body>
 <script>
