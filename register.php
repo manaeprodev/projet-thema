@@ -1,8 +1,9 @@
 <?php
 $titlePage = "Inscription";
+$uploadDirectory = 'assets/userPfp/';
 // Traitement du formulaire d'inscription ici
 
-require_once("components/connexion.php");
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
@@ -11,12 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
     $luckyNumber = htmlspecialchars($_POST['luckyNumber']);
 
-
     $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
-    // Vous pouvez ajouter ici le code pour enregistrer les données dans une base de données, par exemple
+    var_dump($_FILES['image']);die();
+    if ($formIsCorrect) {
 
-    // Redirection vers une page de succès ou autre
-    header("Location: inscription_reussie.php");
+        createUser($username, $password, $luckyNumber, $_FILES['image'], $uploadDirectory);
+
+        header("Location: inscription_reussie.php");
+    } else {
+        header("Location: inscription_reussie.php");
+    }
+
     exit();
 }
 
@@ -24,17 +30,18 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 {
     $validForm = true;
 
-    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
-    $stmt = $connexion->prepare($requete);
-    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
-    $stmt->execute();
-
-    $nbLignes = $stmt->rowCount();
-
-    //L'username doit être unique en BDD
-    if ($nbLignes > 0) {
-        $validForm = false;
-    }
+//    require_once("components/connexion.php");
+//    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
+//    $stmt = $connexion->prepare($requete);
+//    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
+//    $stmt->execute();
+//
+//    $nbLignes = $stmt->rowCount();
+//
+//    //L'username doit être unique en BDD
+//    if ($nbLignes > 0) {
+//        $validForm = false;
+//    }
 
     //L'username doit être MAJUSCULES minuscules chiffres underscores uniquement
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
@@ -56,11 +63,39 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
         $validForm = false;
     }
 
-    //Si le formulaire n'est pas valide suite aux vérifs, on renvoie au register
-    if(!$validForm) {
-        header("Location: register.php?error=invalidInput");
+    return $validForm;
+
+}
+
+function createUser($username, $password, $luckyNumber, $image, $uploadDirectory)
+{
+    //Enregistrement de l'image
+    if(isset($image)) {
+        if ($image['error'] === UPLOAD_ERR_OK) {
+            var_dump($image);die();
+            // Obtenez le nom du fichier temporaire
+            $tmpName = $image['tmp_name'];
+
+            // Obtenez le nom du fichier original
+            $fileName = $image['name'];
+
+            // Déplacez le fichier téléchargé vers le répertoire de destination
+            move_uploaded_file($tmpName, $uploadDirectory . $fileName);
+
+        } else {
+            echo 'Une erreur s\'est produite lors du téléchargement de l\'image.';
+        }
     }
-    var_dump($_POST);die();
+
+    var_dump($image);die();
+
+
+    //Insertion en base
+    $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
+VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+
+
+
 }
 ?>
 
