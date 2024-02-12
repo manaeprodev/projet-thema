@@ -1,7 +1,13 @@
-import puppeteer from 'puppeteer';
+const puppeteer  = require('puppeteer');
 const { Storage } = require('@google-cloud/storage');
-const { default: puppeteer } = require('puppeteer');
+const functions = require('@google-cloud/functions-framework');
 
+const PUPPETEER_OPTIONS = {
+    args: [
+        '--no-sandbox'
+    ],
+    ignoreDefaultArgs: ['--disable-extensions']
+  };
 
 function getDateFormatted() {
     const today = new Date();
@@ -33,7 +39,7 @@ exports.myCloudFunction = async (req, res) => {
         console.log(resultatLotoUrl);
     
         //Acces a la page avec puppeteer
-        const browser = await puppeteer.launch(); //Setup un nouveau browser
+        const browser = await puppeteer.launch(PUPPETEER_OPTIONS); //Setup un nouveau browser
         const page = await browser.newPage(); //Creer une nouvelle page internet
         await page.goto(resultatLotoUrl); //On va sur la page que l'on a créé
         
@@ -59,8 +65,8 @@ exports.myCloudFunction = async (req, res) => {
 
         //Nom du fichier
         //Changer le nom du fichier --> N°jour_N°mois_N°annee.csv
-        const file = bucket.file(`${Date.now()}_response.json`);
-        await file.save(JSON.stringify(response.data));
+        const file = bucket.file(`${getDateFormatted()}.json`);
+        await file.save(JSON.stringify(allFdjBalls));
 
     } catch (error) {
         console.error(error);
