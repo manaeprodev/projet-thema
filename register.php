@@ -1,10 +1,8 @@
 <?php
 $titlePage = "Inscription";
 $uploadDirectory = 'assets/userPfp/';
+
 // Traitement du formulaire d'inscription ici
-
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
@@ -13,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $luckyNumber = htmlspecialchars($_POST['luckyNumber']);
 
     $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
-    var_dump($_FILES['image']);die();
     if ($formIsCorrect) {
 
         createUser($username, $password, $luckyNumber, $_FILES['image'], $uploadDirectory);
@@ -30,18 +27,18 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 {
     $validForm = true;
 
-//    require_once("components/connexion.php");
-//    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
-//    $stmt = $connexion->prepare($requete);
-//    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
-//    $stmt->execute();
-//
-//    $nbLignes = $stmt->rowCount();
-//
-//    //L'username doit être unique en BDD
-//    if ($nbLignes > 0) {
-//        $validForm = false;
-//    }
+    require_once("components/connexion.php");
+    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
+    $stmt = $connexion->prepare($requete);
+    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $nbLignes = $stmt->rowCount();
+
+    //L'username doit être unique en BDD
+    if ($nbLignes > 0) {
+        $validForm = false;
+    }
 
     //L'username doit être MAJUSCULES minuscules chiffres underscores uniquement
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
@@ -72,29 +69,33 @@ function createUser($username, $password, $luckyNumber, $image, $uploadDirectory
     //Enregistrement de l'image
     if(isset($image)) {
         if ($image['error'] === UPLOAD_ERR_OK) {
-            var_dump($image);die();
-            // Obtenez le nom du fichier temporaire
             $tmpName = $image['tmp_name'];
 
-            // Obtenez le nom du fichier original
-            $fileName = $image['name'];
+            // Générez un nom de fichier unique pour éviter les collisions
+            $fileName = uniqid('', true) . '_' . $image['name'];
 
             // Déplacez le fichier téléchargé vers le répertoire de destination
             move_uploaded_file($tmpName, $uploadDirectory . $fileName);
+
+            // Enregistrez le nom du fichier dans la base de données
+            $imagePath = $uploadDirectory . $fileName;
 
         } else {
             echo 'Une erreur s\'est produite lors du téléchargement de l\'image.';
         }
     }
 
-    var_dump($image);die();
-
-
     //Insertion en base
     $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
 VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
-
+    require_once("components/connexion.php");
+    $stmt = $connexion->prepare($requete);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':luckyNumber', $luckyNumber);
+    $stmt->bindParam(':image', $imagePath);
+    $stmt->execute();
 
 }
 ?>
