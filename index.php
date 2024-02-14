@@ -1,6 +1,11 @@
 <?php
 
-require_once("./components/connexion.php");
+if (isset($_SESSION)) {
+    session_destroy();
+}
+
+
+//require_once("./components/connexion.php");
 
 $titlePage = "Connexion";
 
@@ -23,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $result = $stmt->get_result();
         $nbLignes = $result->num_rows;
-
+        var_dump($result);
+        var_dump($nbLignes);
+        die();
         if ($nbLignes > 0) {
             session_start();
             $_SESSION['user'] = $result;
