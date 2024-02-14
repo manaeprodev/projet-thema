@@ -4,8 +4,7 @@ if (isset($_SESSION)) {
     session_destroy();
 }
 
-
-//require_once("./components/connexion.php");
+require_once("./components/connexion.php");
 
 $titlePage = "Connexion";
 
