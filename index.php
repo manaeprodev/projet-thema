@@ -1,7 +1,36 @@
 <?php
+
+require_once("./components/connexion.php");
+
 $titlePage = "Connexion";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['username']) && isset($_POST['password']))
+    {
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
 
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+            header("Location: index.php?error=1");
+        }
+
+        //Regex pour empecher injection SQL
+
+        $requete = "SELECT id, username, luckyNumber, pfp FROM users WHERE username = ? AND password = ? LIMIT 1";
+        $stmt = $connexion->prepare($requete);
+        $stmt->bind_param('ss', $username, $password);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $nbLignes = $result->num_rows;
+
+        if ($nbLignes > 0) {
+            session_start();
+            $_SESSION['user'] = $result;
+            header("Location: menu.php");
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,9 +44,9 @@ $titlePage = "Connexion";
 
 <div class="container">
     <h2>Formulaire de Connexion</h2>
-    <form>
-        <input type="text" placeholder="Nom d'utilisateur" required>
-        <input type="password" placeholder="Mot de passe" required>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <input type="submit" value="Se connecter">
     </form>
     <p>Pas de compte? <a href="register.php">Inscrivez-vous dés maintenant!</a></p>
