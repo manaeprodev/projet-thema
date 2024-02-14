@@ -1,6 +1,6 @@
 <?php
 $titlePage = "Inscription";
-$uploadDirectory = 'assets/userPfp/';
+$uploadDirectory = './assets/userPfp/';
 
 // Traitement du formulaire d'inscription ici
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -100,6 +100,7 @@ function saveImage($image, $uploadDirectory, $imagePath)
         if (file_exists($uploadFile)) {
             echo "Le fichier existe déjà.";
         } else {
+            echo $uploadFile;
             // Déplacer le fichier téléchargé vers l'emplacement souhaité
             if (move_uploaded_file($image["tmp_name"], $uploadFile)) {
                 echo "Le fichier " . htmlspecialchars(basename($image["name"])) . " a été téléchargé avec succès.";
