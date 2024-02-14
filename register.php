@@ -5,16 +5,19 @@ $uploadDirectory = 'assets/userPfp/';
 // Traitement du formulaire d'inscription ici
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (!isset($username) || !isset($password) || !isset($luckyNumber)) {
-        header("Location: register.php?error=1");
-    }
+
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
     $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
     $luckyNumber = htmlspecialchars($_POST['luckyNumber']);
 
+    if (!isset($username) || !isset($password) || !isset($confirmPassword)|| !isset($luckyNumber)) {
+        header("Location: register.php?error=1");
+    }
+
     $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
+    
     if ($formIsCorrect) {
 
         createUser($username, $password, $luckyNumber, $_FILES['image'], $uploadDirectory);
@@ -148,7 +151,7 @@ VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_T
             alert("Veuillez remplir tous les champs obligatoires.")
         }
     }
-    
+
     // Fonction pour afficher les informations du fichier et l'aperçu
     function showFileInfo() {
         var input = document.getElementById('imageInput');
