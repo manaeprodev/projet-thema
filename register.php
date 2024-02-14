@@ -5,22 +5,26 @@ $uploadDirectory = 'assets/userPfp/';
 // Traitement du formulaire d'inscription ici
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
     $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
-    $luckyNumber = htmlspecialchars($_POST['luckyNumber']);
+    $luckyNumber = htmlspecialchars($_POST["luckyNumber"]);
+    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
 
     if (!isset($username) || !isset($password) || !isset($confirmPassword)|| !isset($luckyNumber)) {
         header("Location: register.php?error=1");
     }
 
-    $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
-
+    //$formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
+    $formIsCorrect = true;
     if ($formIsCorrect) {
 
-        createUser($username, $password, $luckyNumber, $_FILES['image'], $uploadDirectory);
+        if ($imagePath != '' && isset($_FILES['image'])) {
+            saveImage($_FILES['image'], $uploadDirectory, $imagePath);
+        }
+
+        createUser($username, $password, $luckyNumber, $imagePath);
 
         header("Location: inscription_reussie.php");
     } else {
@@ -72,28 +76,8 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 
 }
 
-function createUser($username, $password, $luckyNumber, $image, $uploadDirectory)
+function createUser($username, $password, $luckyNumber, $imagePath)
 {
-    //Enregistrement de l'image
-    if(isset($image)) {
-        if ($image['error'] === UPLOAD_ERR_OK) {
-            $tmpName = $image['tmp_name'];
-
-            // Générez un nom de fichier unique pour éviter les collisions
-            $fileName = uniqid('', true) . '_' . $image['name'];
-
-            // Déplacez le fichier téléchargé vers le répertoire de destination
-            move_uploaded_file($tmpName, $uploadDirectory . $fileName);
-
-            // Enregistrez le nom du fichier dans la base de données
-            $imagePath = $uploadDirectory . $fileName;
-
-        } else {
-            $imagePath = null;
-            echo 'Une erreur s\'est produite lors du téléchargement de l\'image.';
-        }
-    }
-
     //Insertion en base
     $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
 VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
@@ -104,6 +88,30 @@ VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_T
     $stmt->execute();
 
 }
+
+function saveImage($image, $uploadDirectory, $imagePath)
+{
+    $uploadFile = $uploadDirectory . $imagePath;
+
+    $check = getimagesize($image["tmp_name"]);
+    //Enregistrement de l'image
+    if ($check !== false) {
+        // Vérifier si le fichier existe déjà
+        if (file_exists($uploadFile)) {
+            echo "Le fichier existe déjà.";
+        } else {
+            // Déplacer le fichier téléchargé vers l'emplacement souhaité
+            if (move_uploaded_file($image["tmp_name"], $uploadFile)) {
+                echo "Le fichier " . htmlspecialchars(basename($image["name"])) . " a été téléchargé avec succès.";
+            } else {
+                echo "Une erreur s'est produite lors du téléchargement du fichier.";
+            }
+        }
+    } else {
+        echo "Le fichier n'est pas une image valide.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +124,7 @@ VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_T
 
 <div class="container">
     <h2>Formulaire d'Inscription</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
         <input type="text" name="username" placeholder="Nom d'utilisateur *" required>
         <input type="password" name="password" placeholder="Mot de passe *" required>
         <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe *" required>
