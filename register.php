@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
-    $password = htmlspecialchars($_POST["password"]);
+    $password = md5(htmlspecialchars($_POST["password"]));
     $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
     $luckyNumber = htmlspecialchars($_POST["luckyNumber"]);
 //    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
