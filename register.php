@@ -100,6 +100,7 @@ function saveImage($image, $uploadDirectory, $imagePath)
         if (file_exists($uploadFile)) {
             echo "Le fichier existe déjà.";
         } else {
+            echo $image["tmp_name"];
             echo $uploadFile;
             // Déplacer le fichier téléchargé vers l'emplacement souhaité
             if (move_uploaded_file($image["tmp_name"], $uploadFile)) {
