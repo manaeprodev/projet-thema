@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = htmlspecialchars($_POST["password"]);
     $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
     $luckyNumber = htmlspecialchars($_POST["luckyNumber"]);
-    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
+//    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
 
     if (!isset($username) || !isset($password) || !isset($confirmPassword)|| !isset($luckyNumber)) {
         header("Location: register.php?error=1");
@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formIsCorrect = true;
     if ($formIsCorrect) {
 
-        if ($imagePath != '' && isset($_FILES['image'])) {
-            saveImage($_FILES['image'], $uploadDirectory, $imagePath);
-        }
+//        if ($imagePath != '' && isset($_FILES['image'])) {
+//            saveImage($_FILES['image'], $uploadDirectory, $imagePath);
+//        }
 
-        createUser($username, $password, $luckyNumber, $imagePath);
+        createUser($username, $password, $luckyNumber/*, $imagePath*/);
 
         header("Location: inscription_reussie.php");
     } else {
@@ -76,15 +76,15 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 
 }
 
-function createUser($username, $password, $luckyNumber, $imagePath)
+function createUser($username, $password, $luckyNumber/*, $imagePath*/)
 {
     //Insertion en base
-    $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
-VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+    $requete = "INSERT INTO users (username, password, luckyNumber, createdDate, lastUpdatedDate)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
     require_once("./components/connexion.php");
     $stmt = $connexion->prepare($requete);
-    $stmt->bind_param('ssis', $username, $password, $luckyNumber, $imagePath);
+    $stmt->bind_param('ssi', $username, $password, $luckyNumber);
     $stmt->execute();
 
 }
@@ -107,10 +107,12 @@ function saveImage($image, $uploadDirectory, $imagePath)
                 echo "Le fichier " . htmlspecialchars(basename($image["name"])) . " a été téléchargé avec succès.";
             } else {
                 echo "Une erreur s'est produite lors du téléchargement du fichier.";
+                header("Location: register.php?error=2");
             }
         }
     } else {
         echo "Le fichier n'est pas une image valide.";
+        header("Location: register.php?error=2");
     }
 }
 
@@ -138,14 +140,14 @@ function saveImage($image, $uploadDirectory, $imagePath)
             }
             ?>
         </select>
-        <p>Votre photo de profil :</p>
-        <div class="file-input-wrapper">
-            <label class="btn-upload">Choisir un fichier
-                <input type="file" name="image" accept="image/*" id="imageInput">
-            </label>
-        </div>
-        <div class="file-input-info" id="fileInfo"></div>
-        <div id="preview"></div>
+<!--        <p>Votre photo de profil :</p>-->
+<!--        <div class="file-input-wrapper">-->
+<!--            <label class="btn-upload">Choisir un fichier-->
+<!--                <input type="file" name="image" accept="image/*" id="imageInput">-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="file-input-info" id="fileInfo"></div>-->
+<!--        <div id="preview"></div>-->
         <input type="submit" value="S'inscrire">
     </form>
     <p>Déjà un compte? <a href="index.php">Connectez-vous ici!</a></p>
@@ -158,8 +160,16 @@ function saveImage($image, $uploadDirectory, $imagePath)
 <script>
     const params = new URLSearchParams(window.location.search);
     if (params.has('error')) {
-        if (params.get('error') === '1') {
-            alert("Veuillez remplir tous les champs obligatoires.")
+        switch (params.get('error')) {
+            case '1':
+                alert("Veuillez remplir tous les champs obligatoires.");
+                break;
+            case '2':
+                alert("Une erreur de sauvegarde est survenue. Veuillez réessayer. Si le problème persiste, contactez un administrateur.")
+                break;
+            default:
+                alert("Une erreur inconnue est survenue.");
+                break;
         }
     }
 
