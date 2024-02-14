@@ -28,6 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_start();
             $_SESSION['user'] = $result;
             header("Location: menu.php");
+        } else {
+            header("Location: index.php?error=2");
         }
     }
 }
