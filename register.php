@@ -4,6 +4,10 @@ $uploadDirectory = 'assets/userPfp/';
 
 // Traitement du formulaire d'inscription ici
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (!isset($username) || !isset($password) || !isset($luckyNumber)) {
+        header("Location: register.php?error=1");
+    }
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
@@ -27,10 +31,10 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 {
     $validForm = true;
 
-    require_once("components/connexion.php");
-    $requete = "SELECT username FROM users WHERE username = ':user' LIMIT 1";
+    require_once("./components/connexion.php");
+    $requete = "SELECT username FROM users WHERE username = ? LIMIT 1";
     $stmt = $connexion->prepare($requete);
-    $stmt->bindParam(':user', $username, PDO::PARAM_STR);
+    $stmt->bind_param('s', $username);
     $stmt->execute();
 
     $nbLignes = $stmt->rowCount();
@@ -90,12 +94,9 @@ function createUser($username, $password, $luckyNumber, $image, $uploadDirectory
     $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
 VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
-    require_once("components/connexion.php");
+    require_once("./components/connexion.php");
     $stmt = $connexion->prepare($requete);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':luckyNumber', $luckyNumber);
-    $stmt->bindParam(':image', $imagePath);
+    $stmt->bind_param('ssis', $username, $password, $luckyNumber, $imagePath);
     $stmt->execute();
 
 }
@@ -141,6 +142,13 @@ VALUES (:username, :password, :luckyNumber, :image, CURRENT_TIMESTAMP, CURRENT_T
 
 </body>
 <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('error')) {
+        if (params.get('error') === '1') {
+            alert("Veuillez remplir tous les champs obligatoires.")
+        }
+    }
+    
     // Fonction pour afficher les informations du fichier et l'aperçu
     function showFileInfo() {
         var input = document.getElementById('imageInput');

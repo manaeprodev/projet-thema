@@ -1,6 +1,6 @@
 <?php
 
-require_once("components/connexion.php");
+require_once("../components/connexion.php");
 
 $requete = "SELECT last_connected_date FROM admin ORDER BY last_connected_date DESC LIMIT 1";
 $resultat = $connexion->query($requete);
