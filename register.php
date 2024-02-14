@@ -81,6 +81,7 @@ function createUser($username, $password, $luckyNumber, $image, $uploadDirectory
             $imagePath = $uploadDirectory . $fileName;
 
         } else {
+            $imagePath = null;
             echo 'Une erreur s\'est produite lors du téléchargement de l\'image.';
         }
     }
