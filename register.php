@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: register.php?error=1");
     }
 
-    //$formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
-    $formIsCorrect = true;
+    $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
+
     if ($formIsCorrect) {
 
 //        if ($imagePath != '' && isset($_FILES['image'])) {
@@ -56,6 +56,8 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
         $validForm = false;
     }
+
+    //Regex pour empecher injection SQL
 
     //Les deux mots de passe doivent être identiques
     if ($pwd !== $confirmPwd) {
