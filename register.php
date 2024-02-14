@@ -28,7 +28,7 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
     $validForm = true;
 
     require_once("components/connexion.php");
-    $requete = "SELECT username FROM users WHERE username = :user LIMIT 1";
+    $requete = "SELECT username FROM users WHERE username = ':user' LIMIT 1";
     $stmt = $connexion->prepare($requete);
     $stmt->bindParam(':user', $username, PDO::PARAM_STR);
     $stmt->execute();
