@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $formIsCorrect = checkForm($username, $password, $confirmPassword, $luckyNumber);
-    
+
     if ($formIsCorrect) {
 
         createUser($username, $password, $luckyNumber, $_FILES['image'], $uploadDirectory);
@@ -40,7 +40,8 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
     $stmt->bind_param('s', $username);
     $stmt->execute();
 
-    $nbLignes = $stmt->rowCount();
+    $result = $stmt->get_result();
+    $nbLignes = $result->num_rows;
 
     //L'username doit être unique en BDD
     if ($nbLignes > 0) {
