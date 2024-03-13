@@ -129,11 +129,11 @@ function saveImage($image, $uploadDirectory, $imagePath)
 <body>
 
 <div class="container">
-    <h2>Formulaire d'Inscription</h2>
+    <h2>Créer un nouveau compte</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
         <input type="text" name="username" placeholder="Nom d'utilisateur *" required>
         <input type="password" name="password" placeholder="Mot de passe *" required>
-        <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe *" required>
+        <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe *" required><br>
         <label for="luckyNumber">Votre numéro chance favori : *</label>
         <select name="luckyNumber" id="luckyNumber" required>
             <?php

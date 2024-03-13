@@ -1,10 +1,10 @@
 <header>
-    <h1>Predeect</h1>
+    <h1 id="project_title">PREDEECT</h1>
 
 </header>
     <nav>
-        <a href="/">Accueil</a>
-        <a href="/">À propos</a>
-        <a href="/">Services</a>
-        <a href="/">Contact</a>
+        <a class="nav_item" href="/">ACCUEIL</a>
+        <a class="nav_item" href="/">À PROPOS</a>
+        <a class="nav_item" href="/">SERVICES</a>
+        <a class="nav_item" href="/">CONTACT</a>
     </nav>

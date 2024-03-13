@@ -49,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <div class="container">
-    <h2>Formulaire de Connexion</h2>
+    <h2>Se connecter</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
         <input type="text" name="username" placeholder="Nom d'utilisateur" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <input type="submit" value="Se connecter">
     </form>
-    <p>Pas de compte? <a href="register.php">Inscrivez-vous dés maintenant!</a></p>
+    <p>Pas de compte?<br><a href="register.php">Inscrivez-vous dés maintenant!</a></p>
 </div>
 
 <?php include "components/footer.php";?>
