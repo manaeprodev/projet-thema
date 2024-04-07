@@ -109,7 +109,7 @@ footer {
 .file-input-wrapper .btn-upload {
     border: 2px solid #fe415e;
     color: #ff2e82;
-    background: -webkit-linear-gradient(right, rgba(255, 144, 49, 0.5), #f0e7db);
+    background: -webkit-linear-gradient(right, rgb(255, 191, 219), #f0e7db);
     padding: 8px 15px;
     border-radius: 5px;
     font-size: 16px;
@@ -263,4 +263,8 @@ label {
 
 label, ::placeholder {
     font-family: 'CLARENDON', Arial, sans-serif; /* Utilisation de la nouvelle police */
+}
+
+#date_title {
+    color: #771238;
 }

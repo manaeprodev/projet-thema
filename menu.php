@@ -1,8 +1,9 @@
 <?php
-//$_SESSION['user'] = "TIRYAKT";
-if (!isset($_SESSION['user'])) {
-    header("Location: index.php");
-}
+session_start();
+$_SESSION['user'] = "TIRYAKT";
+//if (!isset($_SESSION['user'])) {
+//    header("Location: index.php");
+//}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -21,7 +22,7 @@ if (!isset($_SESSION['user'])) {
         }
     ?>
     <h3>Prochain tirage :</h3>
-    <h2><?php
+    <h2 id="date_title"><?php
         date_default_timezone_set('Europe/Paris');
 
         setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
@@ -32,7 +33,9 @@ if (!isset($_SESSION['user'])) {
             $dateActuelle->modify('+1 day');
         }
 
-        $dateProchain = $dateActuelle->format('Y-m-d');
+        $dateProchain = $dateActuelle->format('Y-m-d 18:00:00');
+        $_SESSION['dateProchain'] = $dateProchain;
+        var_dump($_SESSION['dateProchain']);
 
         $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
 
@@ -41,10 +44,13 @@ if (!isset($_SESSION['user'])) {
         echo "<script>var endDate = new Date('$dateProchain');</script>";
         ?></h2>
     <input id="btn_prediction" type="submit" value="Faire une prédiction !" hidden>
+
             <div class="file-input-wrapper">
+                <p>Temps avant clôture :</p>
                 <label id="countdown" class="btn-upload">
                 </label>
             </div>
+
             <div class="file-input-info" id="fileInfo"></div>
 </div>
 
@@ -52,10 +58,11 @@ if (!isset($_SESSION['user'])) {
 
 </body>
 <script>
-
+    var allowPrediction = true;
     var x = setInterval(function() {
         // Date actuelle
         var now = new Date().getTime();
+
 
         var distance = endDate - now;
 
@@ -67,13 +74,24 @@ if (!isset($_SESSION['user'])) {
         document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
 
         if (distance < 0) {
+            allowPrediction = false;
             clearInterval(x);
             document.getElementById("countdown").innerHTML = "EXPIRÉ";
             document.getElementById("btn_prediction").hidden = true;
+            alert("La date limite de prédiction a expiré, réessayez plus tard.");
         } else {
             document.getElementById("btn_prediction").hidden = false;
         }
     }, 1000);
+
+    document.getElementById("btn_prediction").addEventListener("click", function() {
+        if(allowPrediction) {
+            window.location.href = "prediction.php";
+        } else {
+            alert("La date limite de prédiction a expiré, réessayez plus tard.");
+        }
+
+    });
 </script>
 </html>
 
