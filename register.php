@@ -84,7 +84,7 @@ function createUser($username, $password, $luckyNumber/*, $imagePath*/)
     $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
 VALUES (?, ?, ?, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
-    require_once("./components/connexion.php");
+    require("./components/connexion.php");
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('ssi', $username, $password, $luckyNumber);
     $stmt->execute();
