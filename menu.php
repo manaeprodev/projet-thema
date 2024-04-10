@@ -1,9 +1,12 @@
 <?php
 
+session_start();
+$data = array();
 if (getenv('ENV') === 'dev') {
-    session_start();
+
     $_SESSION['user'] = "TIRYAKT";
 } elseif (!isset($_SESSION['user'])) {
+
     header("Location: index.php?inscription_reussie=2");
 }
 
@@ -18,11 +21,11 @@ if (getenv('ENV') === 'dev') {
 </head>
 
 <div class="container">
-    <h2>Bonjour, <a id="username_title"><?php if (isset($_SESSION['user'])) { echo "@".$_SESSION['user']; } else { echo "Inconnu";}?></a></h2>
+    <h2>Bonjour, <a id="username_title"><?php if (isset($_SESSION['user'])) { echo "@".$_SESSION['user'][0]['username']; } else { echo "Inconnu";}?></a></h2>
     <?php
-        if (!isset($_SESSION['user'])) {
-            echo "<a href='index.php'>Pensez à vous connecter en cliquant ici.</a>";
-        }
+    if (!isset($_SESSION['user'])) {
+        echo "<a href='index.php'>Pensez à vous connecter en cliquant ici.</a>";
+    }
     ?>
     <h3>Prochain tirage :</h3>
     <h2 id="date_title"><?php

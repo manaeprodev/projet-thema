@@ -27,10 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $result = $stmt->get_result();
         $nbLignes = $result->num_rows;
-        
+
         if ($nbLignes > 0) {
             session_start();
-            $_SESSION['user'] = $result;
+            $data = array();
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            $_SESSION['user'] = $data;
             header("Location: menu.php");
         } else {
             header("Location: index.php?error=2");
