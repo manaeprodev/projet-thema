@@ -2,11 +2,11 @@
 
 session_start();
 if (getenv('ENV') === 'dev') {
-    $_SESSION['user'] = array();
-    $_SESSION['user'][0]['username'] = "TIRYAKT";
-    $_SESSION['user'][0]['luckynumber'] = "2";
-    $_SESSION['user'][0]['createdDate'] = "2024-02-14";
-    $_SESSION['user'][0]['lastUpdatedDate'] = "2024-04-10";
+    $userData = array();
+    $userData['username'] = "TIRYAKT";
+    $userData['luckynumber'] = "2";
+    $userData['createdDate'] = "2024-02-14";
+    $userData['lastUpdatedDate'] = "2024-04-10";
 } elseif (!isset($_SESSION['user'])) {
     header("Location: index.php?inscription_reussie=2");
 } else {
@@ -38,13 +38,13 @@ if (getenv('ENV') === 'dev') {
     <h2>Mon profil</h2>
     <dl>
         <dt>Nom d'utilisateur</dt>
-        <dd><?= $_SESSION['user'][0]['username']?></dd>
+        <dd><?= $userData['username']?></dd>
         <dt>Numéro chance favori</dt>
-        <dd><?= $_SESSION['user'][0]['luckynumber']?></dd>
+        <dd><?= $userData['luckynumber']?></dd>
         <dt>Date de création</dt>
-        <dd><?= $_SESSION['user'][0]['createdDate']?></dd>
+        <dd><?= $userData['createdDate']?></dd>
         <dt>Date de dernière mise à jour</dt>
-        <dd><?= $_SESSION['user'][0]['lastUpdatedDate']?></dd>
+        <dd><?= $userData['lastUpdatedDate']?></dd>
     </dl>
     <a id="deco" href="index.php">Se déconnecter</a>
 </div>

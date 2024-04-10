@@ -2,7 +2,7 @@
 session_start();
 if (getenv('ENV') === 'dev') {
 
-    $_SESSION['user'] = "TIRYAKT";
+    $_SESSION['user'][0]['username'] = "TIRYAKT";
 } elseif (!isset($_SESSION['user'])) {
     header("Location: index.php?inscription_reussie=2");
 }
@@ -77,7 +77,7 @@ $dateProchain = $_SESSION['dateProchain'];
     ?>
     </div>
     <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
-
+    <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
 </div>
 <?php include "components/footer.php";?>
 </body>
@@ -153,10 +153,20 @@ $dateProchain = $_SESSION['dateProchain'];
                 error = 1;
                 alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
             } else {
+                var ids = [];
+                var uesrname;
+                selectedBalls = document.querySelectorAll('.selected');
+                selectedBalls.forEach(function(ball) {
+                    var id = ball.getAttribute('id');
+
+                    // Ajouter l'ID au tableau
+                    ids.push(id);
+                });
+                username = document.getElementById('user').value;
                 $.ajax({
                     url: 'process_prediction.php',
                     type: 'POST',
-                    data: {'parametre': 'valeur'},
+                    data: {'predictionData': ids, 'user': username},
                     success: function(response) {
                         console.log(response);
                         alert('Votre prédiction a bien été prise en compte.');

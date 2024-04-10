@@ -4,7 +4,7 @@ session_start();
 $data = array();
 if (getenv('ENV') === 'dev') {
 
-    $_SESSION['user'] = "TIRYAKT";
+    $_SESSION['user'][0]['username'] = "TIRYAKT";
 } elseif (!isset($_SESSION['user'])) {
 
     header("Location: index.php?inscription_reussie=2");
