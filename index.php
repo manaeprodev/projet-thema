@@ -65,11 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     const params = new URLSearchParams(window.location.search);
     if (params.has('inscription_reussie')) {
         switch (params.get('inscription_reussie')) {
-            case true:
+            case 1:
                 alert("Votre compte a bien été créé! Vous pouvez vous connecter.");
-                break;
-            case false:
-                alert("Erreur lors de la création de votre compte");
                 break;
             default:
                 alert("Une erreur inconnue est survenue.");

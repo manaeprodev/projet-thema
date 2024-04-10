@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         createUser($username, $password, $luckyNumber/*, $imagePath*/);
 
-        header("Location: index.php?inscription_reussie=true");
+        header("Location: index.php?inscription_reussie=1");
     } else {
         header("Location: register.php?error=3");
     }
