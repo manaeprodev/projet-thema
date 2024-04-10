@@ -65,9 +65,9 @@ if (getenv('ENV') === 'dev') {
             $predicTab = explode(',', $row['vl_prediction']);
             foreach ($predicTab as $key => $ballNumber) {
                 if ($key === 5) {
-                    echo "<label class='ball ia_chance'>$ballNumber</label>";
+                    echo "<dd><label class='ball ia_chance'>$ballNumber</label></dd>";
                 } else {
-                    echo "<label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label>";
+                    echo "<dd><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
                 }
 
             }
