@@ -1,13 +1,16 @@
 <?php
 
-require './components/connexion.php';
-
+session_start();
 if (getenv('ENV') === 'dev') {
-    session_start();
-    $_SESSION['user'] = "TIRYAKT";
+    $_SESSION['user'] = array();
+    $_SESSION['user'][0]['username'] = "TIRYAKT";
+    $_SESSION['user'][0]['luckynumber'] = "2";
+    $_SESSION['user'][0]['createdDate'] = "2024-02-14";
+    $_SESSION['user'][0]['lastUpdatedDate'] = "2024-04-10";
 } elseif (!isset($_SESSION['user'])) {
     header("Location: index.php?inscription_reussie=2");
 } else {
+    require './components/connexion.php';
     $requete = "SELECT * FROM users WHERE username = ? LIMIT 1";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('s', $_SESSION['user']);
@@ -27,21 +30,49 @@ if (getenv('ENV') === 'dev') {
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
-<div class="container">
-    <h1>Mon profil</h1>
+<div class="container predeecta">
+    <h2>Mon profil</h2>
     <dl>
         <dt>Nom d'utilisateur</dt>
-        <dd><?= $_SESSION['user']?></dd>
+        <dd><?= $_SESSION['user'][0]['username']?></dd>
         <dt>Numéro chance favori</dt>
-        <dd>Cascading Style Sheets</dd>
+        <dd><?= $_SESSION['user'][0]['luckynumber']?></dd>
         <dt>Date de création</dt>
-        <dd>Cascading Style Sheets</dd>
+        <dd><?= $_SESSION['user'][0]['createdDate']?></dd>
         <dt>Date de dernière mise à jour</dt>
-        <dd>Cascading Style Sheets</dd>
+        <dd><?= $_SESSION['user'][0]['lastUpdatedDate']?></dd>
+    </dl>
+    <a id="deco" href="index.php">Se déconnecter</a>
+</div>
+<div class="container predeecta">
+    <h2>Mes dernières prédictions</h2>
+    <dl>
+        <dt>2024-04-10</dt>
+        <dd>5,6,7,8,9,10</dd>
+        <dt>2024-04-08</dt>
+        <dd>5,6,7,8,9,10</dd>
+        <dt>2024-04-06</dt>
+        <dd>5,6,7,8,9,10</dd>
+        <dt>2024-04-03</dt>
+        <dd>5,6,7,8,9,10</dd>
+        <dt>2024-04-01</dt>
+        <dd>5,6,7,8,9,10</dd>
+    </dl>
+</div>
+<div class="container predeecta">
+    <h2>Mes stats</h2>
+    <dl>
+        <dt>Nombre de prédictions totales</dt>
+        <dd>5</dd>
+        <dt>Précision des prédictions</dt>
+        <dd>12%</dd>
+        <dt>Rang</dt>
+        <dd>1/12</dd>
     </dl>
 </div>
 <?php include "components/footer.php";?>
 
 </body>
-<script></script>
+<script>
+</script>
 </html>
