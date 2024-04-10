@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
     $username = htmlspecialchars($_POST["username"]);
     $password = md5(htmlspecialchars($_POST["password"]));
-    $confirmPassword = htmlspecialchars($_POST["confirmPassword"]);
+    $confirmPassword = md5(htmlspecialchars($_POST["confirmPassword"]));
     $luckyNumber = htmlspecialchars($_POST["luckyNumber"]);
 //    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
 
@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         createUser($username, $password, $luckyNumber/*, $imagePath*/);
 
-        header("Location: inscription_reussie.php");
+        header("Location: index.php");
     } else {
-        header("Location: register.php?error=2");
+        header("Location: register.php?error=3");
     }
 
     exit();
@@ -81,8 +81,8 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 function createUser($username, $password, $luckyNumber/*, $imagePath*/)
 {
     //Insertion en base
-    $requete = "INSERT INTO users (username, password, luckyNumber, createdDate, lastUpdatedDate)
-VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+    $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
+VALUES (?, ?, ?, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
     require_once("./components/connexion.php");
     $stmt = $connexion->prepare($requete);
@@ -168,6 +168,9 @@ function saveImage($image, $uploadDirectory, $imagePath)
                 break;
             case '2':
                 alert("Une erreur de sauvegarde est survenue. Veuillez réessayer. Si le problème persiste, contactez un administrateur.")
+                break;
+            case '3':
+                alert("Le formulaire n'est pas valide.")
                 break;
             default:
                 alert("Une erreur inconnue est survenue.");
