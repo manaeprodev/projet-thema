@@ -63,15 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 <script>
     const params = new URLSearchParams(window.location.search);
-    if (params.has('inscription_reussie')) {
-        switch (params.get('inscription_reussie')) {
-            case 1:
-                alert("Votre compte a bien été créé! Vous pouvez vous connecter.");
-                break;
-            default:
-                alert("Une erreur inconnue est survenue.");
-                break;
+    document.addEventListener("DOMContentLoaded", function() {
+        if (params.has('inscription_reussie')) {
+            switch (params.get('inscription_reussie')) {
+                case '1':
+                    alert("Votre compte a bien été créé! Vous pouvez vous connecter.");
+                    break;
+                default:
+                    break;
+            }
         }
-    }
+    });
 </script>
 </html>
