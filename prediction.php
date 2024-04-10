@@ -169,7 +169,14 @@ $dateProchain = $_SESSION['dateProchain'];
                     data: {'predictionData': ids, 'user': username},
                     success: function(response) {
                         console.log(response);
-                        alert('Votre prédiction a bien été prise en compte.');
+                        if (response) {
+                            alert('Votre prédiction a bien été prise en compte.');
+                            window.location.href = 'menu.php';
+                        } else {
+                            alert('Erreur : vous avez déjà joué sur ce tirage.');
+                            window.location.href = 'menu.php';
+                        }
+
                     },
                     error: function(xhr, status, error) {
                         console.error(error);

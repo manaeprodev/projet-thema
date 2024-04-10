@@ -3,10 +3,10 @@
 session_start();
 if (getenv('ENV') === 'dev') {
     $userData = array();
-    $userData['username'] = "TIRYAKT";
-    $userData['luckynumber'] = "2";
-    $userData['createdDate'] = "2024-02-14";
-    $userData['lastUpdatedDate'] = "2024-04-10";
+    $userData[0]['username'] = "TIRYAKT";
+    $userData[0]['luckynumber'] = "2";
+    $userData[0]['createdDate'] = "2024-02-14";
+    $userData[0]['lastUpdatedDate'] = "2024-04-10";
 } elseif (!isset($_SESSION['user'])) {
     header("Location: index.php?inscription_reussie=2");
 } else {
@@ -14,7 +14,7 @@ if (getenv('ENV') === 'dev') {
     $requete = "SELECT * FROM users WHERE username = ? LIMIT 1";
     $userData = array();
     $stmt = $connexion->prepare($requete);
-    $stmt->bind_param('s', $_SESSION['user']);
+    $stmt->bind_param('s', $_SESSION['user'][0]['username']);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -38,15 +38,15 @@ if (getenv('ENV') === 'dev') {
     <h2>Mon profil</h2>
     <dl>
         <dt>Nom d'utilisateur</dt>
-        <dd><?= $userData['username']?></dd>
+        <dd><?= $userData[0]['username']?></dd>
         <dt>Numéro chance favori</dt>
-        <dd><?= $userData['luckynumber']?></dd>
+        <dd><?= $userData[0]['luckynumber']?></dd>
         <dt>Date de création</dt>
-        <dd><?= $userData['createdDate']?></dd>
+        <dd><?= $userData[0]['createdDate']?></dd>
         <dt>Date de dernière mise à jour</dt>
-        <dd><?= $userData['lastUpdatedDate']?></dd>
+        <dd><?= $userData[0]['lastUpdatedDate']?></dd>
     </dl>
-    <a id="deco" href="index.php">Se déconnecter</a>
+    <a id="deco" href="index.php?disconnected=1">Se déconnecter</a>
 </div>
 <div class="container predeecta">
     <h2>Mes dernières prédictions</h2>
