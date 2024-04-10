@@ -64,7 +64,7 @@ input[type="text"], input[type="password"] {
     border-radius: 3px;
 }
 
-input[type="submit"] {
+input[type="submit"], #btn_valider, #btn_ecouter_ia {
     margin-top: 10px;
     width: 80%;
     background: -webkit-linear-gradient(right, rgba(220, 101, 0, 0.5), rgba(197, 184, 169, 0.5), rgba(255, 46, 130, 0.5), rgba(255, 37, 67, 0.5));
@@ -80,7 +80,7 @@ input[type="submit"] {
             1px  1px 0 #bebebe;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, #btn_valider, #btn_ecouter_ia {
     background: -webkit-linear-gradient(right, #ff9031, #f0e7db, #ff6ba8, #fe415e);
 }
 
@@ -89,6 +89,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
+    margin-top: 20px;
 }
 
 .file-input-wrapper {
@@ -267,4 +268,55 @@ label, ::placeholder {
 
 #date_title {
     color: #771238;
+}
+
+.ball {
+    display: inline-block;
+    width: 30px; /* Set a fixed width */
+    height: 30px; /* Set a fixed height */
+    border: 2px solid #771238;
+    border-radius: 50%; /* This makes the border round */
+    text-align: center; /* Center the label content */
+    box-sizing: border-box; /* Include padding and border in the width and height */
+    margin: 2px;
+}
+
+.regular {
+    border: 2px solid #771238;
+}
+
+.ia_regular {
+    border: 2px solid #771238;
+    background-color: rgba(255, 46, 130, 0.20);
+}
+
+.chance {
+    border: 2px solid #dc6500;
+}
+
+.ia_chance {
+    border: 2px solid #dc6500;
+    background-color: rgba(220, 101, 0, 0.20);
+}
+
+.regular:hover {
+    background-color: rgba(119, 18, 56, 0.43);
+}
+
+.chance:hover {
+    background-color: rgba(220, 101, 0, 0.43);
+}
+
+.selected {
+    background-color: #ff2543;
+}
+
+.predeecta{
+    padding-top: 0;
+    margin-top : 20px;
+    margin-bottom: 0;
+}
+
+.label_container {
+    display: flex;
 }

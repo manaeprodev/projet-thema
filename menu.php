@@ -33,9 +33,8 @@ $_SESSION['user'] = "TIRYAKT";
             $dateActuelle->modify('+1 day');
         }
 
-        $dateProchain = $dateActuelle->format('Y-m-d 18:00:00');
+        $dateProchain = $dateActuelle->format('Y-m-d 17:00:00');
         $_SESSION['dateProchain'] = $dateProchain;
-        var_dump($_SESSION['dateProchain']);
 
         $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
 

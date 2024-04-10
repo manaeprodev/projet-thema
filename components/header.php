@@ -3,8 +3,9 @@
 
 </header>
     <nav>
-        <a class="nav_item" href="/">ACCUEIL</a>
-        <a class="nav_item" href="/">À PROPOS</a>
-        <a class="nav_item" href="/">SERVICES</a>
-        <a class="nav_item" href="/">CONTACT</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/menu.php">ACCUEIL</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/tirages.php">TIRAGES</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/apropos.php">À PROPOS</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/contact.php">CONTACT</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/mon_profil.php">PROFIL</a>
     </nav>
