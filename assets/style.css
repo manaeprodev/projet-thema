@@ -343,3 +343,6 @@ dd {
     vertical-align: middle; /* Centre verticalement */
 }
 
+#btn_valider, #btn_ecouter_ia {
+    width: 300px;
+}

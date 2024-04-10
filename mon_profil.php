@@ -12,11 +12,15 @@ if (getenv('ENV') === 'dev') {
 } else {
     require './components/connexion.php';
     $requete = "SELECT * FROM users WHERE username = ? LIMIT 1";
+    $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('s', $_SESSION['user']);
     $stmt->execute();
     $result = $stmt->get_result();
-    var_dump($result);die();
+
+    while ($row = $result->fetch_assoc()) {
+        $userData[] = $row;
+    }
 }
 
 
