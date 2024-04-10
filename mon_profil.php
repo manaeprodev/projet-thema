@@ -4,7 +4,7 @@ session_start();
 if (getenv('ENV') === 'dev') {
     $userData = array();
     $userData[0]['username'] = "TIRYAKT";
-    $userData[0]['luckynumber'] = "2";
+    $userData[0]['luckyNumber'] = "2";
     $userData[0]['createdDate'] = "2024-02-14";
     $userData[0]['lastUpdatedDate'] = "2024-04-10";
 } elseif (!isset($_SESSION['user'])) {
@@ -40,7 +40,7 @@ if (getenv('ENV') === 'dev') {
         <dt>Nom d'utilisateur</dt>
         <dd><?= $userData[0]['username']?></dd>
         <dt>Numéro chance favori</dt>
-        <dd><?= $userData[0]['luckynumber']?></dd>
+        <dd><?= $userData[0]['luckyNumber']?></dd>
         <dt>Date de création</dt>
         <dd><?= $userData[0]['createdDate']?></dd>
         <dt>Date de dernière mise à jour</dt>
