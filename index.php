@@ -69,6 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 case '1':
                     alert("Votre compte a bien été créé! Vous pouvez vous connecter.");
                     break;
+                case '2':
+                    alert("Vous devez vous connecter pour continuer.");
+                    break;
                 default:
                     break;
             }

@@ -1,4 +1,11 @@
 <?php
+
+if (getenv('ENV') === 'dev') {
+    session_start();
+    $_SESSION['user'] = "TIRYAKT";
+} elseif (!isset($_SESSION['user'])) {
+    header("Location: index.php?inscription_reussie=2");
+}
 ?>
 
 <!DOCTYPE html>

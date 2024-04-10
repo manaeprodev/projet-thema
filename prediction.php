@@ -1,5 +1,12 @@
 <?php
-session_start();
+
+if (getenv('ENV') === 'dev') {
+    session_start();
+    $_SESSION['user'] = "TIRYAKT";
+} elseif (!isset($_SESSION['user'])) {
+    header("Location: index.php?inscription_reussie=2");
+}
+
 date_default_timezone_set('Europe/Paris');
 
 setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
