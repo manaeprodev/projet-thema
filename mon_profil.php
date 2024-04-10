@@ -51,16 +51,28 @@ if (getenv('ENV') === 'dev') {
 <div class="container predeecta">
     <h2>Mes dernières prédictions</h2>
     <dl>
-        <dt>2024-04-10</dt>
-        <dd>5,6,7,8,9,10</dd>
-        <dt>2024-04-08</dt>
-        <dd>5,6,7,8,9,10</dd>
-        <dt>2024-04-06</dt>
-        <dd>5,6,7,8,9,10</dd>
-        <dt>2024-04-03</dt>
-        <dd>5,6,7,8,9,10</dd>
-        <dt>2024-04-01</dt>
-        <dd>5,6,7,8,9,10</dd>
+        <?php
+        $idUser = $userData[0]['id'];
+        $requete = "SELECT * FROM user_predictions WHERE id_user = ? LIMIT 10";
+        $myPredictions = array();
+        $stmt = $connexion->prepare($requete);
+        $stmt->bind_param('i', $idUser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<dt>".$row['date_prediction']."</dt>";
+            $predicTab = explode(',', $row['vl_prediction']);
+            foreach ($predicTab as $key => $ballNumber) {
+                if ($key === 5) {
+                    echo "<label class='ball ia_chance'>$ballNumber</label>";
+                } else {
+                    echo "<label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label>";
+                }
+
+            }
+        }
+        ?>
     </dl>
 </div>
 <div class="container predeecta">
