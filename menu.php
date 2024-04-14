@@ -3,7 +3,7 @@
 session_start();
 $data = array();
 if (getenv('ENV') === 'dev') {
-
+    $_SESSION['user'] = array();
     $_SESSION['user'][0]['username'] = "TIRYAKT";
 } elseif (!isset($_SESSION['user'])) {
 

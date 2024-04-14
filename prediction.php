@@ -55,6 +55,7 @@ $dateProchain = $_SESSION['dateProchain'];
     }
     ?>
         <button id="btn_valider" type="button" hidden>Valider ma prédiction !</button>
+        <button id="btn_clear" type="button">Effacer</button>
     </form>
 </div>
 <div class="container predeecta">
@@ -68,12 +69,12 @@ $dateProchain = $_SESSION['dateProchain'];
         $randomNumber = mt_rand(1, 49);
         if (!in_array($randomNumber, $randomArray)) {
             $randomArray[] = $randomNumber;
-            echo "<label for='ia_ball_$randomNumber' class='ball ia_regular'>$randomNumber</label>";
+            echo "<label for='ia_ball_$randomNumber' class='ball ia_regular ia'>$randomNumber</label>";
         }
     }
 
     $randomNumber = mt_rand(1, 10);
-    echo "<label class='ball ia_chance'>$randomNumber</label>";
+    echo "<label class='ball ia_chance ia'>$randomNumber</label>";
     ?>
     </div>
     <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
@@ -188,6 +189,33 @@ $dateProchain = $_SESSION['dateProchain'];
             error = 1;
             alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
         }
+    });
+
+    function clear() {
+        var elements = document.querySelectorAll('.selected');
+
+        elements.forEach(function(element) {
+            element.classList.remove('selected');
+        });
+    }
+
+    document.getElementById('btn_clear').addEventListener('click', function () {
+        clear();
+    });
+
+    document.getElementById('btn_ecouter_ia').addEventListener('click', function () {
+        var elementsWithIAClass = document.getElementsByClassName('ia');
+        clear();
+
+        for (var i = 0; i < elementsWithIAClass.length; i++) {
+            if (i === elementsWithIAClass.length - 1) {
+                document.getElementById('c_' + elementsWithIAClass[i].textContent).classList.add('selected');
+            } else {
+                document.getElementById('r_' + elementsWithIAClass[i].textContent).classList.add('selected');
+            }
+
+        }
+        alert('Les boules prédites par Predeecta ont été sélectionnées, vous pouvez valider votre prédiction.');
     });
 
 
