@@ -62,7 +62,7 @@ if (getenv('ENV') === 'dev') {
         $nbPredic = $result->num_rows;
 
         while ($row = $result->fetch_assoc()) {
-            echo "<dt>".$row['date_prediction']."</dt>";
+            echo "<dt>".$row['date_prediction']."</dt><br>";
             $predicTab = explode(',', $row['vl_prediction']);
             foreach ($predicTab as $key => $ballNumber) {
                 if ($key === 5) {
