@@ -59,15 +59,16 @@ if (getenv('ENV') === 'dev') {
         $stmt->bind_param('i', $idUser);
         $stmt->execute();
         $result = $stmt->get_result();
+        $nbPredic = $result->num_rows;
 
         while ($row = $result->fetch_assoc()) {
             echo "<dt>".$row['date_prediction']."</dt>";
             $predicTab = explode(',', $row['vl_prediction']);
             foreach ($predicTab as $key => $ballNumber) {
                 if ($key === 5) {
-                    echo "<dd><label class='ball ia_chance'>$ballNumber</label></dd>";
+                    echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd>";
                 } else {
-                    echo "<dd><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
+                    echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
                 }
 
             }
@@ -79,7 +80,7 @@ if (getenv('ENV') === 'dev') {
     <h2>Mes stats</h2>
     <dl>
         <dt>Nombre de prédictions totales</dt>
-        <dd>5</dd>
+        <dd><?= $nbPredic;?></dd>
         <dt>Précision des prédictions</dt>
         <dd>12%</dd>
         <dt>Rang</dt>

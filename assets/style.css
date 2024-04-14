@@ -321,7 +321,6 @@ label, ::placeholder {
     display: flex;
 }
 
-/* Style pour la liste de définitions */
 dl {
     margin: 0;
     padding-left: 70px;
@@ -329,20 +328,23 @@ dl {
     text-align: center
 }
 
-/* Style pour les termes (dt) */
 dt {
-    margin-top: 10px; /* Espacement entre les termes */
-    display: inline-block; /* Permet de centrer verticalement */
-    vertical-align: middle; /* Centre verticalement */
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-/* Style pour les définitions (dd) */
 dd {
-    margin: 0 0 10px 0; /* Espacement en bas */
+    margin: 0 0 10px 0;
     color: #a2a2a2;
-    vertical-align: middle; /* Centre verticalement */
+    vertical-align: middle;
 }
 
 #btn_valider, #btn_ecouter_ia {
     width: 300px;
+}
+
+.predictions_balls{
+    display: inline;
+    color: black;
 }
