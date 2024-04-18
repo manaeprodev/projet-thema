@@ -155,7 +155,7 @@ $dateProchain = $_SESSION['dateProchain'];
                 alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
             } else {
                 var ids = [];
-                var uesrname;
+                var username;
                 selectedBalls = document.querySelectorAll('.selected');
                 selectedBalls.forEach(function(ball) {
                     var id = ball.getAttribute('id');
