@@ -171,7 +171,12 @@ $dateProchain = $_SESSION['dateProchain'];
                     success: function(response) {
                         console.log(response);
                         if (response) {
-                            alert('Votre prédiction a bien été prise en compte.');
+                            if (response === true) {
+                                alert('Votre prédiction a bien été prise en compte.');
+                            } else {
+                                alert('Vous avez déjà joué.');
+                            }
+
                             window.location.href = 'menu.php';
                         } else {
                             alert('Erreur : vous avez déjà joué sur ce tirage.');
