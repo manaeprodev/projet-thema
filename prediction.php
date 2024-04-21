@@ -60,7 +60,6 @@ $dateProchain = $_SESSION['dateProchain'];
 </div>
 <div class="container predeecta">
     <p>Les conseils de Predeecta</p>
-    <img>
     <p>D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!</p>
     <div class="label_container">
     <?php
@@ -149,8 +148,10 @@ $dateProchain = $_SESSION['dateProchain'];
 
     document.getElementById('btn_valider').addEventListener('click', function() {
         if (selectedRegularBalls && selectedChanceBalls) {
-            if (selectedRegularBalls.length+1 !== MAX_REGULAR_BALLS
-                && selectedChanceBalls.length+1 !== MAX_CHANCE_BALLS) {
+            selectedRegularBalls = document.querySelectorAll('.selected.regular');
+            selectedChanceBalls = document.querySelectorAll('.selected.chance');
+            if (selectedRegularBalls.length !== MAX_REGULAR_BALLS
+                && selectedChanceBalls.length !== MAX_CHANCE_BALLS) {
                 error = 1;
                 alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
             } else {
@@ -174,12 +175,12 @@ $dateProchain = $_SESSION['dateProchain'];
                             if (response === true) {
                                 alert('Votre prédiction a bien été prise en compte.');
                             } else {
-                                alert('Vous avez déjà joué.');
+                                alert('Erreur : vous avez déjà joué sur ce tirage.');
                             }
 
                             window.location.href = 'menu.php';
                         } else {
-                            alert('Erreur : vous avez déjà joué sur ce tirage.');
+                            alert('Erreur : La prédiction a échoué. Veuillez réessayer.');
                             window.location.href = 'menu.php';
                         }
 
@@ -192,7 +193,7 @@ $dateProchain = $_SESSION['dateProchain'];
             }
         } else {
             error = 1;
-            alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
+            alert('Erreur : Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
         }
     });
 
@@ -220,6 +221,8 @@ $dateProchain = $_SESSION['dateProchain'];
             }
 
         }
+        selectedRegularBalls = document.querySelectorAll('.selected.regular');
+        selectedChanceBalls = document.querySelectorAll('.selected.chance');
         alert('Les boules prédites par Predeecta ont été sélectionnées, vous pouvez valider votre prédiction.');
     });
 
