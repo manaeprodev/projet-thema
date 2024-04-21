@@ -9,16 +9,12 @@ if (getenv('ENV') === 'dev') {
     //get User
     $requete = "(SELECT * FROM tirages WHERE is_done = 1)
         UNION
-        (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1)";
+        (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1) ORDER BY date_tirage DESC";
     $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    while ($row = $result->fetch_assoc()) {
-        $idUser = $row['id'];
-        $username = $row['username'];
-    }
 }
 
 
@@ -35,28 +31,32 @@ if (getenv('ENV') === 'dev') {
 <?php
 while ($row = $result->fetch_assoc()) {
     $idTirage = $row['id'];
-    $dateTirage = $row['date_tirage'];
+    $dateTirage = new DateTime($row['date_tirage']);
+    $formattedDateTirage = $dateTirage->format('d/m/Y');
     $isDone = $row['is_done'];
     $vlTirage = $row['vl_tirage'];
+    $tirageTab = array_map('intval', explode(',', $vlTirage));
 
-    $predicTab = explode(',', $row['vl_prediction']);
     echo "
-    <div class='container predeecta>
-        <h2>Tirage n°$idTirage - $dateTirage</h2>
+    <div class='container predeecta'>
+        <h2>Tirage n°$idTirage - $formattedDateTirage</h2>
     ";
     if ($isDone === 0) {
         echo "<p>Statut : <b class='ouvert'>Ouvert</b></p>";
+        echo "<button id='btn_valider' type='button'>Je participe !</button>";
     } else {
         echo "<p>Statut : <b class='termine'>Terminé</b></p>";
-    }
-    foreach ($predicTab as $key => $ballNumber) {
-        if ($key === 5) {
-            echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd><br><br>";
-        } else {
-            echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
-        }
+        echo "<dl>";
+        foreach ($tirageTab as $key => $ballNumber) {
 
+            if ($key === 5) {
+                echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd>";
+            } else {
+                echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
+            }
+        }
     }
+    echo "</dl>";
     echo "</div>";
 }
 ?>
@@ -64,4 +64,9 @@ while ($row = $result->fetch_assoc()) {
 <?php include "components/footer.php";?>
 
 </body>
+<script>
+    document.getElementById('btn_valider').addEventListener('click', function() {
+        window.location.href = 'prediction.php';
+    });
+</script>
 </html>
