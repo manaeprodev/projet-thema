@@ -60,7 +60,7 @@ $dateProchain = $_SESSION['dateProchain'];
 </div>
 <div class="container predeecta">
     <p>Les conseils de Predeecta</p>
-    <p>D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!</p>
+    <p>"D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!"</p>
     <div class="label_container">
     <?php
     $randomArray = array();
@@ -78,6 +78,49 @@ $dateProchain = $_SESSION['dateProchain'];
     </div>
     <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
+    <p>"Je vous ai préparé quelques indicateurs pour vous aider!"</p>
+    <dl>
+    <dt>Les 10 numéros les plus gagnants dans l'histoire du Loto : </dt>
+        <dd class='predictions_balls'><label class='ball ia_regular'>44</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>11</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>14</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>4</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>47</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>34</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>3</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>35</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>30</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>23</label></dd>
+    <dt>Les 3 numéros chances les plus gagnants dans l'histoire du Loto : </dt>
+        <dd class='predictions_balls'><label class='ball ia_chance'>3</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>6</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>9</label></dd>
+    <dt>Les 10 numéros les plus gagnants des 10 derniers tirages : </dt>
+        <dd class='predictions_balls'><label class='ball ia_regular'>23</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>3</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>45</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>24</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>9</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>44</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>12</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>39</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>4</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>49</label></dd>
+    <dt>Les 3 numéros chances les plus gagnants des 10 derniers tirages : </dt>
+        <dd class='predictions_balls'><label class='ball ia_chance'>9</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>1</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>5</label></dd>
+    <dt>Les numéros les moins sortis dans l'histoire du Loto : </dt>
+        <dd class='predictions_balls'><label class='ball ia_regular'>24</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>46</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>22</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>2</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_regular'>36</label></dd>
+    <dt>Les numéros chances les moins sortis dans l'histoire du Loto : </dt>
+        <dd class='predictions_balls'><label class='ball ia_chance'>5</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>8</label></dd>
+        <dd class='predictions_balls'><label class='ball ia_chance'>2</label></dd>
+    </dl>
 </div>
 <?php include "components/footer.php";?>
 </body>
