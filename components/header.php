@@ -16,9 +16,7 @@
             $userData[0]['luckyNumber'] = "2";
             $userData[0]['createdDate'] = "2024-02-14";
             $userData[0]['lastUpdatedDate'] = "2024-04-10";
-        } elseif (!isset($_SESSION['user'])) {
-            header("Location: index.php?inscription_reussie=2");
-        } else {
+        } elseif (isset($_SESSION['user'])) {
             require './components/connexion.php';
             $requete = "SELECT * FROM users WHERE username = ? LIMIT 1";
             $userData = array();
