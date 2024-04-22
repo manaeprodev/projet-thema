@@ -32,7 +32,7 @@
             }
 
             if ($userData[0]['is_admin'] === 1) {
-                echo "<a class='nav_item' href='".getenv('ROOT_DIR')."/admin/index.php'>ADMIN</a>";
+                echo "<a class='nav_item' href='".getenv('ROOT_DIR')."/admin/admin.php'>ADMIN</a>";
             }
         }
         ?>
