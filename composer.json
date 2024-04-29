@@ -1,5 +1,6 @@
 {
     "require": {
-        "google/cloud-storage": "^1.30"
+        "google/cloud-storage": "^1.30",
+      "ext-json": "*"
     }
 }

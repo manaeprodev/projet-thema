@@ -49,12 +49,14 @@ if (getenv('ENV') === 'dev') {
 
     echo "<td>$vlTirage</td>";
     echo "<td>";
-    echo "<a href='modifier.php?id=$idTirage'>Modifier</a>";
-    if ($isDone === 0) {
-        $newDate = substr($dateTirage, 0, 10);
-        echo "<br>";
-        echo "<a href='terminer.php?id=$idTirage&date=$newDate'>Terminer</a>";
+    $newDate = substr($dateTirage, 0, 10);
+    $today = date("Y-m-d");
+    if ($dateTirage == $today) {
+        echo "Indisponible";
+    } else {
+        echo "<a href='terminer.php?id=$idTirage&date=$newDate'>Actualiser</a>";
     }
+
 
     echo "</td>";
 
