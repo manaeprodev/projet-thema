@@ -53,7 +53,9 @@ if (getenv('ENV') === 'dev') {
     echo "<td>";
     echo "<a href='modifier.php?id=$idTirage'>Modifier</a>";
     if ($isDone === 0) {
-        echo "<a href='terminer.php?id=$idTirage'>Terminer</a>";
+        $newDate = $dateTirage->format('Y-m-d');
+        echo "<br>";
+        echo "<a href='terminer.php?id=$idTirage&date=$newDate'>Terminer</a>";
     }
 
     echo "</td>";
