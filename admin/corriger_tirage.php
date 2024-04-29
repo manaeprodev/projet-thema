@@ -7,7 +7,7 @@ if (getenv('ENV') === 'dev') {
 } else {
     require("../components/connexion.php");
     //get User
-    $requete = "(SELECT * FROM tirages";
+    $requete = "SELECT * FROM tirages";
     $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
