@@ -7,9 +7,7 @@ if (getenv('ENV') === 'dev') {
 } else {
     require("../components/connexion.php");
     //get User
-    $requete = "(SELECT * FROM tirages WHERE is_done = 1)
-        UNION
-        (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1) ORDER BY date_tirage DESC";
+    $requete = "SELECT * FROM tirages WHERE date_tirage <= CONCAT(CURDATE(), ' 23:59:59') ORDER BY date_tirage DESC";
     $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
@@ -53,7 +51,7 @@ if (getenv('ENV') === 'dev') {
     echo "<td>";
     echo "<a href='modifier.php?id=$idTirage'>Modifier</a>";
     if ($isDone === 0) {
-        $newDate = $dateTirage->format('Y-m-d');
+        $newDate = substr($dateTirage, 0, 10);
         echo "<br>";
         echo "<a href='terminer.php?id=$idTirage&date=$newDate'>Terminer</a>";
     }
