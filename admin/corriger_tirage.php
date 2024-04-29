@@ -7,7 +7,9 @@ if (getenv('ENV') === 'dev') {
 } else {
     require("../components/connexion.php");
     //get User
-    $requete = "SELECT * FROM tirages";
+    $requete = "(SELECT * FROM tirages WHERE is_done = 1)
+        UNION
+        (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1) ORDER BY date_tirage DESC";
     $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
@@ -50,9 +52,10 @@ if (getenv('ENV') === 'dev') {
     echo "<td>$vlTirage</td>";
     echo "<td>";
     echo "<a href='modifier.php?id=$idTirage'>Modifier</a>";
-    echo " | "; // Séparateur
-    echo "<a href='supprimer.php?id=$idTirage'
-        onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer cet élément ?\");'>Supprimer</a>";
+    if ($isDone === 0) {
+        echo "<a href='terminer.php?id=$idTirage'>Terminer</a>";
+    }
+
     echo "</td>";
 
     echo "</tr>";
