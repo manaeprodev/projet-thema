@@ -51,7 +51,7 @@ if (getenv('ENV') === 'dev') {
     echo "<td>";
     $newDate = substr($dateTirage, 0, 10);
     $today = date("Y-m-d");
-    if ($dateTirage == $today) {
+    if ($newDate === $today) {
         echo "Indisponible";
     } else {
         echo "<a href='terminer.php?id=$idTirage&date=$newDate'>Actualiser</a>";
