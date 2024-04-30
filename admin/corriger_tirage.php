@@ -67,4 +67,21 @@ if (getenv('ENV') === 'dev') {
 <?php include "../components/footer.php";?>
 
 </body>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    document.addEventListener("DOMContentLoaded", function() {
+        if (params.has('success')) {
+            switch (params.get('success')) {
+                case '0':
+                    alert("Échec de la récupération des résultats depuis la source externe.");
+                    break;
+                case '1':
+                    alert("Le résultat du tirage a bien été récupéré. Celui-ci a donc été clôturé.");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+</script>
 </html>
