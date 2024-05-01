@@ -215,12 +215,7 @@ $dateProchain = $_SESSION['dateProchain'];
                     success: function(response) {
                         console.log(response);
                         if (response) {
-                            if (response === true) {
-                                alert('Votre prédiction a bien été prise en compte.');
-                            } else {
-                                alert('Erreur : vous avez déjà joué sur ce tirage.');
-                            }
-
+                            alert('Votre prédiction a bien été prise en compte.')
                             window.location.href = 'menu.php';
                         } else {
                             alert('Erreur : La prédiction a échoué. Veuillez réessayer.');

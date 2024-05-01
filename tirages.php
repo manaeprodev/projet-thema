@@ -6,14 +6,13 @@ if (getenv('ENV') === 'dev') {
     header("Location: index.php?inscription_reussie=2");
 } else {
     require("./components/connexion.php");
-    //get User
     $requete = "(SELECT * FROM tirages WHERE is_done = 1)
         UNION
         (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1) ORDER BY date_tirage DESC";
-    $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $tirages = $stmt->get_result();
+
 
 }
 
@@ -29,7 +28,9 @@ if (getenv('ENV') === 'dev') {
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <?php
-while ($row = $result->fetch_assoc()) {
+
+while ($row = $tirages->fetch_assoc()) {
+
     $idTirage = $row['id'];
     $dateTirage = new DateTime($row['date_tirage']);
     $formattedDateTirage = $dateTirage->format('d/m/Y');
