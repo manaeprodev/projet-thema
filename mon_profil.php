@@ -21,6 +21,31 @@ if (getenv('ENV') === 'dev') {
     while ($row = $result->fetch_assoc()) {
         $userData[] = $row;
     }
+
+    $requete = "SELECT up.id_user, up.id_tirage, up.vl_prediction, t.vl_tirage
+FROM user_predictions up
+INNER JOIN tirages t ON up.id_tirage = t.id
+WHERE t.is_done = 1 AND up.id_user = ?";
+    $stmt = $connexion->prepare($requete);
+    $stmt->bind_param('s', $userData[0]['id']);
+    $stmt->execute();
+    $asso_up_tir = $stmt->get_result();
+
+    $nbOfPredic = $asso_up_tir->num_rows;
+    $nbOfCorrect = 0;
+
+    while ($row = $asso_up_tir->fetch_assoc()) {
+        $array1 = array_map('intval', explode(',', $row['vl_prediction']));
+        $array2 = array_map('intval', explode(',', $row['vl_tirage']));
+
+        $commonElements = array_intersect($array1, $array2);
+
+        $commonCount = count($commonElements);
+
+        $nbOfCorrect += $commonCount;
+    }
+
+    $precision = $nbOfCorrect / ($nbOfPredic * 6);
 }
 
 
@@ -53,7 +78,7 @@ if (getenv('ENV') === 'dev') {
     <dl>
         <?php
         $idUser = $userData[0]['id'];
-        $requete = "SELECT * FROM user_predictions WHERE id_user = ? LIMIT 10";
+        $requete = "SELECT * FROM user_predictions WHERE id_user = ? ORDER BY date_prediction DESC LIMIT 10";
         $myPredictions = array();
         $stmt = $connexion->prepare($requete);
         $stmt->bind_param('i', $idUser);
@@ -61,8 +86,36 @@ if (getenv('ENV') === 'dev') {
         $result = $stmt->get_result();
         $nbPredic = $result->num_rows;
 
+        $translations = array(
+            'Monday' => 'Lundi',
+            'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi',
+            'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi',
+            'Saturday' => 'Samedi',
+            'Sunday' => 'Dimanche',
+            'January' => 'Janvier',
+            'February' => 'Février',
+            'March' => 'Mars',
+            'April' => 'Avril',
+            'May' => 'Mai',
+            'June' => 'Juin',
+            'July' => 'Juillet',
+            'August' => 'Août',
+            'September' => 'Septembre',
+            'October' => 'Octobre',
+            'November' => 'Novembre',
+            'December' => 'Décembre'
+        );
+
         while ($row = $result->fetch_assoc()) {
-            echo "<dt>".$row['date_prediction']."</dt><br>";
+            $date = new DateTime($row['date_prediction']);
+            $formattedDate = $date->format('l d F Y \à H:i');
+            foreach ($translations as $eng => $fr) {
+                $formattedDate = str_replace($eng, $fr, $formattedDate);
+            }
+            echo "<dt>Tirage n°".$row['id_tirage']."</dt><br>";
+            echo "<dt>".$formattedDate."</dt><br>";
             $predicTab = explode(',', $row['vl_prediction']);
             foreach ($predicTab as $key => $ballNumber) {
                 if ($key === 5) {
@@ -82,7 +135,7 @@ if (getenv('ENV') === 'dev') {
         <dt>Nombre de prédictions totales</dt>
         <dd><?= $nbPredic;?></dd>
         <dt>Précision des prédictions</dt>
-        <dd>12%</dd>
+        <dd><?= $precision * 100;?>%</dd>
         <dt>Rang</dt>
         <dd>1/12</dd>
     </dl>
