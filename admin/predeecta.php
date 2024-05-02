@@ -5,13 +5,13 @@ require("../components/connexion.php");
 $requete = "SELECT 1 FROM ia_predictions WHERE DATE(dt_prediction) = CURDATE() LIMIT 1";
 $stmt = $connexion->prepare($requete);
 $stmt->execute();
-$nbLignes = $stmt->num_rows();
+$nbLignes = $stmt->get_result()->num_rows;
 $stmt->close();
 
 $requeteAll = "SELECT 1 FROM ia_predictions";
 $stmtAll = $connexion->prepare($requeteAll);
 $stmtAll->execute();
-$nbPredictions = $stmtAll->num_rows;
+$nbPredictions = $stmtAll->get_result()->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,7 +25,7 @@ $nbPredictions = $stmtAll->num_rows;
 
 <div class="container predeecta">
     <h2>Paramétrage</h2>
-    <p>Vous pouvez paramétrer l'IA lors de son prochain entraînement.</p>
+    <p>Vous pouvez paramétrer l'IA lors de son prochain entraînement. Les valeurs entrées vont influer sur le temps d'apprentissage de l'IA.</p>
     <form>
         <label for="integer-input">Epoch (entre 100 et 2000) :</label>
         <input type="number" id="integer-input" name="integer-input" min="100" max="2000" step="1" value="100">
@@ -41,6 +41,7 @@ $nbPredictions = $stmtAll->num_rows;
         echo "<p>Revenez demain !</p>";
     } else {
         echo "<button id='btn_entrainer' type='button'>Entraîner Predeecta !</button>";
+        echo "<p>Cette action peut prendre un certain temps en fonction de la dernière configuration.</p>";
     }
 
     echo "<p>Predeecta v1.".$nbPredictions."</p>";
@@ -72,6 +73,6 @@ $nbPredictions = $stmtAll->num_rows;
                 alert('Une erreur est survenue lors de l\'entraînement de l\'IA. Veuillez réessayer.');
             }
         });
-    }
+    });
 </script>
 </html>
