@@ -1,12 +1,12 @@
 <?php
 
-function getData($date)
+function getData($date, $bucket, $ext)
 {
     require_once 'auth.php';
-    $bucket = $storage->bucket('predeect_bucket');
+    $bucket = $storage->bucket($bucket);
 
-    $object = $bucket->object($date.'.json');
-    $object->downloadToFile('../data/'.$date.'.json');
+    $object = $bucket->object($date.$ext);
+    $object->downloadToFile('../data/'.$date.$ext);
 }
 
 function pushDataToDb($idTirage, $boulesString)

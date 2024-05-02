@@ -6,7 +6,7 @@ $idTirage = $_GET['id'];
 $date = $_GET['date'];
 
 try {
-    getData($date);
+    getData($date, 'predeect_bucket', '.json');
 
     $tirageJson = file_get_contents("../data/" . $date . ".json");
 

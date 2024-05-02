@@ -5,12 +5,13 @@ require("../components/connexion.php");
 $requete = "SELECT 1 FROM ia_predictions WHERE DATE(dt_prediction) = CURDATE() LIMIT 1";
 $stmt = $connexion->prepare($requete);
 $stmt->execute();
-$nbLignes = $stmt->num_rows;
+$nbLignes = $stmt->num_rows();
+$stmt->close();
 
-$requete = "SELECT 1 FROM ia_predictions";
-$stmt = $connexion->prepare($requete);
-$stmt->execute();
-$nbPredictions = $stmt->num_rows;
+$requeteAll = "SELECT 1 FROM ia_predictions";
+$stmtAll = $connexion->prepare($requeteAll);
+$stmtAll->execute();
+$nbPredictions = $stmtAll->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -42,7 +43,7 @@ $nbPredictions = $stmt->num_rows;
         echo "<button id='btn_entrainer' type='button'>Entraîner Predeecta !</button>";
     }
 
-    echo "Predeecta v1.".$nbPredictions;
+    echo "<p>Predeecta v1.".$nbPredictions."</p>";
     ?>
 
 </div>
