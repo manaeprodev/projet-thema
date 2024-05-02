@@ -64,7 +64,7 @@ input[type="text"], input[type="password"] {
     border-radius: 3px;
 }
 
-input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco {
+input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer {
     margin-top: 10px;
     width: 80%;
     background: -webkit-linear-gradient(right, rgba(220, 101, 0, 0.5), rgba(197, 184, 169, 0.5), rgba(255, 46, 130, 0.5), rgba(255, 37, 67, 0.5));
@@ -80,7 +80,7 @@ input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco {
             1px  1px 0 #bebebe;
 }
 
-input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #deco:hover {
+input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #deco:hover, #btn_entrainer:hover {
     background: -webkit-linear-gradient(right, #ff9031, #f0e7db, #ff6ba8, #fe415e);
 }
 
@@ -340,7 +340,7 @@ dd {
     vertical-align: middle;
 }
 
-#btn_valider, #btn_ecouter_ia {
+#btn_valider, #btn_ecouter_ia, #btn_entrainer {
     width: 300px;
 }
 

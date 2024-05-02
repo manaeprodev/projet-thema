@@ -6,6 +6,11 @@ $requete = "SELECT 1 FROM ia_predictions WHERE DATE(dt_prediction) = CURDATE() L
 $stmt = $connexion->prepare($requete);
 $stmt->execute();
 $nbLignes = $stmt->num_rows;
+
+$requete = "SELECT 1 FROM ia_predictions";
+$stmt = $connexion->prepare($requete);
+$stmt->execute();
+$nbPredictions = $stmt->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,8 +39,10 @@ $nbLignes = $stmt->num_rows;
         echo "<p>Predeecta s'est déjà entraînée aujourd'hui...</p>";
         echo "<p>Revenez demain !</p>";
     } else {
-        echo "<button id='btn_valider' type='button' hidden>Entraîner Predeecta !</button>";
+        echo "<button id='btn_entrainer' type='button'>Entraîner Predeecta !</button>";
     }
+
+    echo "Predeecta v1.".$nbPredictions;
     ?>
 
 </div>
@@ -43,4 +50,27 @@ $nbLignes = $stmt->num_rows;
 <?php include "../components/footer.php";?>
 
 </body>
+<script>
+    document.getElementById('btn_entrainer').addEventListener('click', function () {
+        $.ajax({
+            url: 'entrainement.php',
+            type: 'POST',
+            data: {},
+            success: function(response) {
+                console.log(response);
+                if (response) {
+                    window.location.href = 'predeecta.php';
+                } else {
+                    alert('Erreur : L\'entraînement a échoué. Veuillez réessayer.');
+                    window.location.href = 'predeecta.php';
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Une erreur est survenue lors de l\'entraînement de l\'IA. Veuillez réessayer.');
+            }
+        });
+    }
+</script>
 </html>
