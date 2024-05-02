@@ -33,7 +33,7 @@ $nbPredictions = $stmtAll->get_result()->num_rows;
     </form>
 </div>
 <div class="container predeecta">
-    <h2>Entraînement</h2>
+    <h2>Entraînement manuel</h2>
     <p>Vous pouvez lancer l'entraînement de l'IA une fois par jour.</p>
     <?php
     if ($nbLignes === 1) {
@@ -47,6 +47,11 @@ $nbPredictions = $stmtAll->get_result()->num_rows;
     echo "<p>Predeecta v1.".$nbPredictions."</p>";
     ?>
 
+</div>
+<div class="container predeecta">
+    <h2>Entraînement automatique</h2>
+    <p>Quand cette option est activée, l'IA sera entraînée automatiquement tous les jours à 03:00 du matin</p>
+    <button id="btn_auto" type="button">Désactivé</button>
 </div>
 
 <?php include "../components/footer.php";?>

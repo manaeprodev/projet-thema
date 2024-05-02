@@ -68,7 +68,7 @@ WHERE t.is_done = 1 AND up.id_user = ?";
         <dd><?= $userData[0]['luckyNumber']?></dd>
         <dt>Date de création</dt>
         <dd><?= $userData[0]['createdDate']?></dd>
-        <dt>Date de dernière mise à jour</dt>
+        <dt>Date de dernière connexion</dt>
         <dd><?= $userData[0]['lastUpdatedDate']?></dd>
     </dl>
     <a id="deco" href="index.php?disconnected=1">Se déconnecter</a>

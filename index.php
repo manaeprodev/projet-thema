@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
 
         $result = $stmt->get_result();
+        $stmt->close();
         $nbLignes = $result->num_rows;
 
         if ($nbLignes > 0) {
@@ -35,6 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $data[] = $row;
             }
             $_SESSION['user'] = $data;
+            $requete = "UPDATE users SET lastUpdatedDate = CURRENT_TIMESTAMP  WHERE username = ?";
+            $stmt = $connexion->prepare($requete);
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
             header("Location: menu.php");
         } else {
             header("Location: index.php?error=2");
