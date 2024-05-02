@@ -31,12 +31,14 @@ if (getenv('ENV') === 'dev') {
             <th>Statut</th>
             <th>Valeur du Tirage</th>
             <th>Actions</th>
+            <th>Date de mise à jour</th>
         </tr>
 <?php while ($row = $result->fetch_assoc()) {
     $idTirage = $row['id'];
     $dateTirage = $row['date_tirage'];
     $isDone = $row['is_done'];
     $vlTirage = $row['vl_tirage'];
+    $dt_maj = $row['dt_maj'];
 
     echo "<tr>";
     echo "<td>$idTirage</td>";
@@ -59,6 +61,7 @@ if (getenv('ENV') === 'dev') {
 
 
     echo "</td>";
+    echo "<td>$dt_maj</td>";
 
     echo "</tr>";
 }?>
