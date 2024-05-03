@@ -5,19 +5,19 @@ if (getenv('ENV') === 'dev') {
 } elseif (!isset($_SESSION['user'])) {
     header("Location: index.php?inscription_reussie=2");
 } else {
-    require("../components/connexion.php");
+    require("components/connexion.php");
 
     $requete = "SELECT username,prec,pts,RANK() OVER (ORDER BY pts DESC) AS rang FROM users 
 WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $rankResult = $stmt->get_result();
 
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<?php include "../components/head.php";?>
+<?php include "components/head.php";?>
 <body>
 <head>
     <?php include "components/header.php";?>
@@ -28,26 +28,25 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
         <tr>
             <th>Rang</th>
             <th>Joueur</th>
-            <th>Précision %</th>
             <th>Points</th>
+            <th>Précision</th>
         </tr>
-        <?php while ($row = $result->fetch_assoc()) {
+        <?php while ($row = $rankResult->fetch_assoc()) {
             $username = $row['username'];
             $prec = $row['prec'];
             $pts = $row['pts'];
-            $rang = $row['$rang'];
-            $dt_maj = $row['dt_maj'];
+            $rang = $row['rang'];
 
             echo "<tr>";
             echo "<td>$rang</td>";
             echo "<td>$username</td>";
             echo "<td>$pts</td>";
-            echo "<td>$prec</td>";
+            echo "<td>$prec%</td>";
             echo "</tr>";
         }?>
     </table>
 </div>
-<?php include "../components/footer.php";?>
+<?php include "components/footer.php";?>
 
 </body>
 </html>

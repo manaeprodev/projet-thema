@@ -51,7 +51,7 @@ WHERE t.is_done = 1 AND up.id_user = ?";
     $requete = "UPDATE users SET prec = ? WHERE id = ?";
 
     $stmt = $connexion->prepare($requete);
-    $stmt->bind_param('ii', $precision, $idUser);
+    $stmt->bind_param('di', $precision, $userData[0]['id']);
     $stmt->execute();
 }
 
@@ -143,8 +143,6 @@ WHERE t.is_done = 1 AND up.id_user = ?";
         <dd><?= $nbPredic;?></dd>
         <dt>Précision des prédictions</dt>
         <dd><?= $precision;?>%</dd>
-        <dt>Rang</dt>
-        <dd>1/12</dd>
     </dl>
 </div>
 <?php include "components/footer.php";?>
