@@ -8,6 +8,7 @@
         <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/apropos.php">À PROPOS</a>
         <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/contact.php">CONTACT</a>
         <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/mon_profil.php">PROFIL</a>
+        <a class="nav_item" href="<?=getenv('ROOT_DIR') ?>/classement.php">CLASSEMENT</a>
         <?php
         session_start();
         if (getenv('ENV') === 'dev') {

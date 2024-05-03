@@ -44,8 +44,15 @@ WHERE t.is_done = 1 AND up.id_user = ?";
 
         $nbOfCorrect += $commonCount;
     }
+    $stmt->close();
 
-    $precision = $nbOfCorrect / ($nbOfPredic * 6);
+    $precision = ($nbOfCorrect / ($nbOfPredic * 6)) * 100;
+
+    $requete = "UPDATE users SET prec = ? WHERE id = ?";
+
+    $stmt = $connexion->prepare($requete);
+    $stmt->bind_param('ii', $precision, $idUser);
+    $stmt->execute();
 }
 
 
@@ -135,7 +142,7 @@ WHERE t.is_done = 1 AND up.id_user = ?";
         <dt>Nombre de prédictions totales</dt>
         <dd><?= $nbPredic;?></dd>
         <dt>Précision des prédictions</dt>
-        <dd><?= $precision * 100;?>%</dd>
+        <dd><?= $precision;?>%</dd>
         <dt>Rang</dt>
         <dd>1/12</dd>
     </dl>

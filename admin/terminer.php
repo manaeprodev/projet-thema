@@ -7,6 +7,8 @@ $date = $_GET['date'];
 
 function addPts($idTirage, $boulesString)
 {
+    require "../components/connexion.php";
+
     $requete = "SELECT * FROM user_predictions WHERE id_tirage = ?";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('i', $idTirage);
