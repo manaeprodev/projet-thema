@@ -46,7 +46,7 @@ WHERE t.is_done = 1 AND up.id_user = ?";
     }
     $stmt->close();
 
-    $precision = ($nbOfCorrect / ($nbOfPredic * 6)) * 100;
+    $precision = round(($nbOfCorrect / ($nbOfPredic * 6)) * 100);
 
     $requete = "UPDATE users SET prec = ? WHERE id = ?";
 

@@ -65,13 +65,8 @@ $nbPredictions = $stmtAll->get_result()->num_rows;
             data: {},
             success: function(response) {
                 console.log(response);
-                if (response) {
-                    window.location.href = 'predeecta.php';
-                } else {
-                    alert('Erreur : L\'entraînement a échoué. Veuillez réessayer.');
-                    window.location.href = 'predeecta.php';
-                }
-
+                alert('Erreur : L\'entraînement a débuté. Veuillez patienter quelques instants.');
+                window.location.href = 'predeecta.php';
             },
             error: function(xhr, status, error) {
                 console.error(error);
