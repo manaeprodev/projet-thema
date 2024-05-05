@@ -8,7 +8,7 @@ require '../../../../components/connexion.php';
 $mail = new PHPMailer(true);
 
 try {
-    $requete = "SELECT DISTINCT email FROM users WHERE wants_email = 1";
+    $requete = "SELECT DISTINCT email FROM users WHERE wants_emails = 1";
     $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
