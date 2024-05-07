@@ -75,15 +75,15 @@ WHERE up.id_tirage = ? AND u.wants_emails = 1";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('i', $idTirage);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $resultPlayers = $stmt->get_result();
 
-    $htmlBody = file_get_contents('template.html');
+    $htmlBody = file_get_contents('resultTemplate.html');
 
     $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-        ->setUsername('contactpredeect@gmail.com')
-        ->setPassword('twpesejjnruponjq');
+        ->setUsername(getenv('GOOGLE_EMAIL'))
+        ->setPassword(getenv('GOOGLE_PASSWORD'));
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $resultPlayers->fetch_assoc()) {
         $email = $row['email'];
         $username = $row['username'];
         $htmlBody = str_replace(array('{{idTirage}}', '{{name}}'), array($idTirage, $username), $htmlBody);
