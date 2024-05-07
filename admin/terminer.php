@@ -58,7 +58,7 @@ function addPts($idTirage, $boulesString)
         }
         $stmt->close();
 
-        $requete = "UPDATE users SET pts = ? WHERE id = ?";
+        $requete = "UPDATE users SET pts = pts + ? WHERE id = ?";
 
         $stmt = $connexion->prepare($requete);
         $stmt->bind_param('ii', $nbPts, $idUser);
