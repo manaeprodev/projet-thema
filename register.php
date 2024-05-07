@@ -10,9 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5(htmlspecialchars($_POST["password"]));
     $confirmPassword = md5(htmlspecialchars($_POST["confirmPassword"]));
     $luckyNumber = htmlspecialchars($_POST["luckyNumber"]);
+    $email = htmlspecialchars($_POST["email"]);
 //    $imagePath = date('YmdHis') . htmlspecialchars($_FILES['image']['name']);
 
-    if (!isset($username) || !isset($password) || !isset($confirmPassword)|| !isset($luckyNumber)) {
+    if (!isset($username) || !isset($password) || !isset($confirmPassword)|| !isset($luckyNumber) || !isset($email)) {
         header("Location: register.php?error=1");
     }
 
@@ -24,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            saveImage($_FILES['image'], $uploadDirectory, $imagePath);
 //        }
 
-        createUser($username, $password, $luckyNumber/*, $imagePath*/);
+        createUser($username, $password, $luckyNumber, $email/*, $imagePath*/);
 
         header("Location: index.php?inscription_reussie=1");
     } else {
@@ -78,15 +79,15 @@ function checkForm($username, $pwd, $confirmPwd, $lckNb)
 
 }
 
-function createUser($username, $password, $luckyNumber/*, $imagePath*/)
+function createUser($username, $password, $luckyNumber, $email/*, $imagePath*/)
 {
     //Insertion en base
-    $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate)
-VALUES (?, ?, ?, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+    $requete = "INSERT INTO users (username, password, luckyNumber, pfp, createdDate, lastUpdatedDate, email)
+VALUES (?, ?, ?, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?);";
 
     require("./components/connexion.php");
     $stmt = $connexion->prepare($requete);
-    $stmt->bind_param('ssi', $username, $password, $luckyNumber);
+    $stmt->bind_param('ssis', $username, $password, $luckyNumber, $email);
     $stmt->execute();
 
 }
@@ -132,6 +133,7 @@ function saveImage($image, $uploadDirectory, $imagePath)
     <h2>Créer un nouveau compte</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
         <input type="text" name="username" placeholder="Nom d'utilisateur *" required>
+        <input type="email" name="email" placeholder="E-mail *" required>
         <input type="password" name="password" placeholder="Mot de passe *" required>
         <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe *" required><br>
         <label for="luckyNumber">Votre numéro chance favori : *</label>
@@ -154,6 +156,8 @@ function saveImage($image, $uploadDirectory, $imagePath)
     </form>
     <p>Déjà un compte? <a href="index.php">Connectez-vous ici!</a></p>
     <p class="italic">*Les champs marqués d'un astérisque sont obligatoires.</p>
+    <p class="italic">En vous inscrivant, vous acceptez de recevoir des e-mails de PREDEECT
+        pour vous notifier d'un prochain tirage. Vous pouvez refuser d'en recevoir à tout moment sur votre profil.</p>
 </div>
 
 <?php include "components/footer.php";?>

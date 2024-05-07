@@ -55,6 +55,19 @@ WHERE t.is_done = 1 AND up.id_user = ?";
     $stmt->execute();
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!empty($_POST['email'])) {
+        $updateEmail = "UPDATE users SET email = ?, wants_emails = 1 WHERE id = ?";
+        $stmt = $connexion->prepare($updateEmail);
+        $stmt->bind_param('si', $_POST['email'], $userData[0]['id']);
+    } else {
+        $updateEmail = "UPDATE users SET email = NULL, wants_emails = 0 WHERE id = ?";
+        $stmt = $connexion->prepare($updateEmail);
+        $stmt->bind_param('i', $userData[0]['id']);
+    }
+
+    $stmt->execute();
+}
 
 ?>
 <!DOCTYPE html>
@@ -77,6 +90,15 @@ WHERE t.is_done = 1 AND up.id_user = ?";
         <dd><?= $userData[0]['createdDate']?></dd>
         <dt>Date de dernière connexion</dt>
         <dd><?= $userData[0]['lastUpdatedDate']?></dd>
+        <dt>E-mail de contact</dt>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+        <dd><input type="email" name="email" placeholder="exemple123@yopmail.com" value="<?php
+        if (!empty($userData[0]['lastUpdatedDate'])) {
+            echo htmlspecialchars($userData[0]['email'], ENT_QUOTES, 'UTF-8');
+        } ?>"></dd>
+        <input type="submit" value="Mettre à jour mon e-mail">
+        <p>Laisser vide pour désactiver les notifications.</p>
+    </form>
     </dl>
     <a id="deco" href="index.php?disconnected=1">Se déconnecter</a>
 </div>
