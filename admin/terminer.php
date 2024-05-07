@@ -66,6 +66,38 @@ function addPts($idTirage, $boulesString)
     }
 }
 
+function sendMails($idTirage)
+{
+    require "../components/connexion.php";
+    $requete = "SELECT u.username, u.email FROM user_predictions up 
+INNER JOIN users u ON up.id_user = u.id
+WHERE up.id_tirage = ? AND u.wants_emails = 1";
+    $stmt = $connexion->prepare($requete);
+    $stmt->bind_param('i', $idTirage);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $htmlBody = file_get_contents('template.html');
+
+    $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+        ->setUsername('contactpredeect@gmail.com')
+        ->setPassword('twpesejjnruponjq');
+
+    while ($row = $result->fetch_assoc()) {
+        $email = $row['email'];
+        $username = $row['username'];
+        $htmlBody = str_replace(array('{{idTirage}}', '{{name}}'), array($idTirage, $username), $htmlBody);
+        $mailer = new Swift_Mailer($transport);
+
+        $message = (new Swift_Message('Les résultats du tirage n°'.$idTirage.' sont disponibles!'))
+            ->setFrom(['contactpredeect@gmail.com' => 'Tony Tiryaki de PREDEECT'])
+            ->setBcc([$email])
+            ->setBody($htmlBody, 'text/html');
+
+        $result = $mailer->send($message);
+    }
+}
+
 try {
     getData($date, 'predeect_bucket', '.json');
 
@@ -87,6 +119,8 @@ try {
     pushDataToDb($idTirage, $boulesString);
 
     addPts($idTirage, $boulesString);
+
+    sendMails($idTirage);
 
     echo "Fin du tirage n°" . $_GET['id'] . " : " . $boulesString;
 
