@@ -6,9 +6,7 @@ if (getenv('ENV') === 'dev') {
     header("Location: index.php?inscription_reussie=2");
 } else {
     require("../components/connexion.php");
-    //get User
     $requete = "SELECT * FROM tirages WHERE date_tirage <= CONCAT(CURDATE(), ' 23:59:59') ORDER BY date_tirage DESC";
-    $userData = array();
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -66,6 +64,8 @@ if (getenv('ENV') === 'dev') {
     echo "</tr>";
 }?>
     </table>
+    <p>Attention, actualiser un tirage récupère les résultats de la FDJ, attribue des points aux joueurs
+    en fonction de leur prédiction et envoie un mail à ceux-ci afin de les prévenir de la fin de l'opération.</p>
 </div>
 <?php include "../components/footer.php";?>
 
