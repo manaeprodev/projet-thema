@@ -81,6 +81,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 case '2':
                     alert("Vous devez vous connecter pour continuer.");
                     break;
+                case '3':
+                    alert('Erreur inconnue survenue.');
+                    break;
+                case '4':
+                    alert('Votre compte a bien été anonymisé. Merci d\'avoir utilisé Predeect.');
+                    break;
+                case '5':
+                    alert('Votre compte a bien été supprimé définitivement. Merci d\'avoir utilisé Predeect.');
+                    break;
                 default:
                     break;
             }

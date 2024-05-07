@@ -167,6 +167,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <dd><?= $precision;?>%</dd>
     </dl>
 </div>
+<div class="container predeecta">
+    <h2>Mes données</h2>
+    <a class="btn-delete-account" href="deleteAccount.php?mode=1&idUser=<?= $userData[0]['id']?>">Anonymiser mes données</a>
+    <a class="btn-delete-account" href="deleteAccount.php?mode=2&idUser=<?= $userData[0]['id']?>">Supprimer mon compte définitivement</a>
+</div>
 <?php include "components/footer.php";?>
 
 </body>
