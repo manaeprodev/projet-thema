@@ -24,7 +24,7 @@ if (getenv('ENV') === 'dev') {
 
 
 <div class="container">
-    <table>
+    <table border = "1">
         <tr>
             <th>ID</th>
             <th>Username</th>
@@ -42,7 +42,7 @@ if (getenv('ENV') === 'dev') {
             $createdDate = $row['createdDate'];
             $lastUpDate = $row['lastUpdatedDate'];
             $luckyNumber = $row['luckyNumber'];
-            $wantsEmail = $row['wants_email'];
+            $wantsEmail = $row['wants_emails'];
             $isAdmin = $row['is_admin'];
             echo "<tr>";
             echo "<td>$idUser</td>";
