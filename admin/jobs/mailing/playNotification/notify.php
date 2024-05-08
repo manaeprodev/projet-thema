@@ -3,7 +3,7 @@
 require '../../../../vendor/autoload.php';
 require '../../../../components/connexion.php';
 
-$htmlBody = file_get_contents('template.html');
+
 
 $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
     ->setUsername('contactpredeect@gmail.com')
@@ -17,6 +17,7 @@ $resultEmailsToSend = $stmt->get_result();
 while ($row = $resultEmailsToSend->fetch_assoc()) {
     $email = $row['email'];
     $username = $row['username'];
+    $htmlBody = file_get_contents('template.html');
     $htmlBody = str_replace('{{name}}', $username, $htmlBody);
     $mailer = new Swift_Mailer($transport);
 
