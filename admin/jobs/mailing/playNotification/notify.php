@@ -12,9 +12,9 @@ $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
 $requete = "SELECT DISTINCT username, email FROM users WHERE wants_emails = 1";
 $stmt = $connexion->prepare($requete);
 $stmt->execute();
-$result = $stmt->get_result();
+$resultEmailsToSend = $stmt->get_result();
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $resultEmailsToSend->fetch_assoc()) {
     $email = $row['email'];
     $username = $row['username'];
     $htmlBody = str_replace('{{name}}', $username, $htmlBody);
