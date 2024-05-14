@@ -6,12 +6,28 @@ if (getenv('ENV') === 'dev') {
     header("Location: index.php?inscription_reussie=2");
 } else {
     require("./components/connexion.php");
-    $requete = "(SELECT * FROM tirages WHERE is_done = 1)
-        UNION
-        (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1) ORDER BY date_tirage DESC";
+    $requete = "SELECT 
+    t.id, 
+    t.date_tirage, 
+    t.is_done, 
+    t.vl_tirage, 
+    t.dt_maj, 
+    u.vl_prediction AS vl_predictions, 
+    u.pts_gagnes
+FROM 
+    ((SELECT * FROM tirages WHERE is_done = 1)
+    UNION
+    (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1)) AS t
+LEFT JOIN 
+    user_predictions AS u ON t.id = u.id_tirage AND u.id_user = 7
+ORDER BY 
+    t.date_tirage DESC;
+
+";
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
     $tirages = $stmt->get_result();
+    $stmt->close();
 
 
 }
@@ -36,7 +52,10 @@ while ($row = $tirages->fetch_assoc()) {
     $formattedDateTirage = $dateTirage->format('d/m/Y');
     $isDone = $row['is_done'];
     $vlTirage = $row['vl_tirage'];
+    $vlPredic = $row ['vl_prediction'];
     $tirageTab = array_map('intval', explode(',', $vlTirage));
+    $predicTab = array_map('intval', explode(',', $vlPredic));
+    $ptsGagnes = $row['pts_gagnes'];
 
     echo "
     <div class='container predeecta'>
@@ -48,6 +67,7 @@ while ($row = $tirages->fetch_assoc()) {
     } else {
         echo "<p>Statut : <b class='termine'>Terminé</b></p>";
         echo "<dl>";
+        echo "<dd>Résultats du tirage :</dd>";
         foreach ($tirageTab as $key => $ballNumber) {
 
             if ($key === 5) {
@@ -57,6 +77,22 @@ while ($row = $tirages->fetch_assoc()) {
             }
         }
     }
+    echo "</dl>";
+    echo "<dl>";
+    if (isset($ptsGagnes) && !empty($ptsGagnes) && isset($vlPredic) && !empty($vlPredic)) {
+        echo "<dd>Votre prédiction : </dd>";
+        foreach ($predicTab as $key => $ballNumber) {
+            if ($key === 5) {
+                echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd>";
+            } else {
+                echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
+            }
+        }
+        echo "<dd>+$ptsGagnes</dd>";
+    } else {
+        echo "<dd>Vous n'avez pas joué sur ce tirage.</dd>";
+    }
+
     echo "</dl>";
     echo "</div>";
 }

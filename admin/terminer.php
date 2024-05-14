@@ -63,6 +63,13 @@ function addPts($idTirage, $boulesString)
         $stmt = $connexion->prepare($requete);
         $stmt->bind_param('ii', $nbPts, $idUser);
         $stmt->execute();
+        $stmt->close();
+
+        $requeteAjPts = "UPDATE user_predictions SET pts_gagnes = ? WHERE id_user = ? AND id_tirage = ?";
+
+        $stmt = $connexion->prepare($requeteAjPts);
+        $stmt->bind_param('iii', $nbPts, $idUser, $idTirage);
+        $stmt->execute();
     }
 }
 

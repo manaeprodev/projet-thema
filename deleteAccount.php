@@ -13,7 +13,7 @@ switch ($_GET['mode']) {
         header('Location: index.php?inscription_reussie=4');
         break;
     case 2:
-        $requete = "DELETE FROM user_predictions WHERE id = ?";
+        $requete = "DELETE FROM user_predictions WHERE id_user = ?";
         $stmt = $connexion->prepare($requete);
         $stmt->bind_param('i', $idUser);
         $stmt->execute();
