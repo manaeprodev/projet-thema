@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $connexion->prepare($requete);
             $stmt->bind_param('s', $username);
             $stmt->execute();
-            header("Location: menu.php");
+            header("Location: mon_profil.php?redirect=menu");
         } else {
             header("Location: index.php?error=2");
         }

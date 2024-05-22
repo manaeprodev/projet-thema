@@ -73,6 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
 }
 
+if ($_GET['redirect'] === 'menu') {
+    header('Location: menu.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
