@@ -32,6 +32,8 @@ function generateRandomPassword()
 
 function sendResetPwdMail($email, $tempPwd, $username)
 {
+    require './vendor';
+
     $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
         ->setUsername(getenv('GOOGLE_EMAIL'))
         ->setPassword(getenv('GOOGLE_PASSWORD'));
