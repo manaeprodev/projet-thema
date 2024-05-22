@@ -216,7 +216,7 @@ $dateProchain = $_SESSION['dateProchain'];
                         console.log(response);
                         if (response) {
                             alert('Votre prédiction a bien été prise en compte.')
-                            window.location.href = 'menu.php';
+                            window.location.href = 'mon_profil.php';
                         } else {
                             alert('Erreur : La prédiction a échoué. Veuillez réessayer.');
                             window.location.href = 'menu.php';

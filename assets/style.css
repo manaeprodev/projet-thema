@@ -13,14 +13,14 @@ body {
 }
 
 header {
-    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
+    background: -webkit-linear-gradient(left, #004494, #00A2D9, #cccccc, #E2001A);
     color: #fff;
     text-align: center;
     padding: 10px 0;
 }
 
 nav {
-    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
+    background: -webkit-linear-gradient(left, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     padding: 10px;
     text-align: center;
     margin-top: 10px;
@@ -67,7 +67,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn-delete-account {
     margin-top: 10px;
     width: 80%;
-    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
+    background: -webkit-linear-gradient(left, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     color: #fff;
     padding: 10px;
     border: none;
@@ -81,11 +81,11 @@ input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn
 }
 
 input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #deco:hover, #btn_entrainer:hover, .btn-delete-account:hover {
-    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
+    background: -webkit-linear-gradient(left, #004494, #00A2D9, #cccccc, #E2001A);
 }
 
 footer {
-    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
+    background: -webkit-linear-gradient(left, #004494, #00A2D9, #cccccc, #E2001A);
     color: #fff;
     text-align: center;
     padding: 10px 0;
@@ -109,8 +109,8 @@ footer {
 
 .file-input-wrapper .btn-upload {
     border: 2px solid #41c5fe;
-    color: #2ee7ff;
-    background: -webkit-linear-gradient(right, rgb(191, 255, 248), #f0e7db);
+    color: #3a6d73;
+    background: -webkit-linear-gradient(right, rgb(191, 255, 248), #dbdef0);
     padding: 8px 15px;
     border-radius: 5px;
     font-size: 16px;
@@ -149,7 +149,7 @@ a {
 }
 
 a:hover{
-    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
+    background: -webkit-linear-gradient(left, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     border-radius: 10px;
 
 }
@@ -194,7 +194,7 @@ label {
     text-align: center;
 }
 #submit-btn {
-    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
+    background: -webkit-linear-gradient(left, #004494, #00A2D9, #cccccc, #E2001A);
     border: none;
     border-radius: 21px;
     box-shadow: 0px 1px 18px #24aec6;
@@ -243,7 +243,7 @@ label {
 }
 
 .nav_item:hover{
-    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
+    background: -webkit-linear-gradient(left, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     border-radius: 10px;
 }
 
