@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $tempPwd = "UPDATE users SET password = ? WHERE id = ?";
             $stmt = $connexion->prepare($tempPwd);
-            $stmt->bind_param('si', ($randomPwd), $idUser);
+            $stmt->bind_param('si', $randomPwd, $idUser);
             $stmt->execute();
 
             sendResetPwdMail($email, $randomPwd, $username);
