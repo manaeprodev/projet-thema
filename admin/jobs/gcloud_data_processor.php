@@ -19,3 +19,21 @@ function pushDataToDb($idTirage, $boulesString)
     $stmt->bind_param('si', $boulesString, $idTirage);
     $stmt->execute();
 }
+
+function pushToBucket($fileToPush, $targetBucket)
+{
+    require_once 'auth.php';
+    $objectName = date('Y-m-d') . ".json";
+    $source = "results/resultats_loto.json";
+    $bucket = $storage->bucket($targetBucket);
+
+    $object = $bucket->upload(
+        fopen($source, 'r'),
+        [
+            'name' => $objectName
+        ]
+    );
+
+    echo "Le fichier $fileToPush a été uploadé dans le bucket $targetBucket avec le nom $objectName.";
+
+}

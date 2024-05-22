@@ -13,14 +13,14 @@ body {
 }
 
 header {
-    background: -webkit-linear-gradient(right, #ff9031, #f0e7db, #ff6ba8, #fe415e);
+    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
     color: #fff;
     text-align: center;
     padding: 10px 0;
 }
 
 nav {
-    background: -webkit-linear-gradient(right, rgba(255, 144, 49, 0.5), rgba(240, 231, 219, 0.5), rgba(255, 107, 168, 0.5), rgba(254, 65, 94, 0.5));
+    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     padding: 10px;
     text-align: center;
     margin-top: 10px;
@@ -67,7 +67,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn-delete-account {
     margin-top: 10px;
     width: 80%;
-    background: -webkit-linear-gradient(right, rgba(220, 101, 0, 0.5), rgba(197, 184, 169, 0.5), rgba(255, 46, 130, 0.5), rgba(255, 37, 67, 0.5));
+    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     color: #fff;
     padding: 10px;
     border: none;
@@ -81,11 +81,11 @@ input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn
 }
 
 input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #deco:hover, #btn_entrainer:hover, .btn-delete-account:hover {
-    background: -webkit-linear-gradient(right, #ff9031, #f0e7db, #ff6ba8, #fe415e);
+    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
 }
 
 footer {
-    background: -webkit-linear-gradient(right, #ff9031, #f0e7db, #ff6ba8, #fe415e);
+    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
     color: #fff;
     text-align: center;
     padding: 10px 0;
@@ -108,9 +108,9 @@ footer {
 }
 
 .file-input-wrapper .btn-upload {
-    border: 2px solid #fe415e;
-    color: #ff2e82;
-    background: -webkit-linear-gradient(right, rgb(255, 191, 219), #f0e7db);
+    border: 2px solid #41c5fe;
+    color: #2ee7ff;
+    background: -webkit-linear-gradient(right, rgb(191, 255, 248), #f0e7db);
     padding: 8px 15px;
     border-radius: 5px;
     font-size: 16px;
@@ -140,7 +140,7 @@ p {
 }
 
 #username_title{
-    color: #ff2e82;
+    color: #00A2D9;
 }
 
 a {
@@ -149,12 +149,12 @@ a {
 }
 
 a:hover{
-    background: -webkit-linear-gradient(right, rgba(220, 101, 0, 0.5), rgba(197, 184, 169, 0.5), rgba(255, 46, 130, 0.5), rgba(255, 37, 67, 0.5));
+    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     border-radius: 10px;
 
 }
 body {
-    background: -webkit-linear-gradient(right, #ffffff, #ffeef7);
+    background: -webkit-linear-gradient(right, #ffffff, #eefeff);
     background-repeat: no-repeat;
 }
 label {
@@ -162,7 +162,7 @@ label {
     font-size: 11pt;
 }
 #forgot-pass {
-    color: #ff2e82;
+    color: #E2001A;
     font-family: "Raleway", sans-serif;
     font-size: 10pt;
     margin-top: 3px;
@@ -194,7 +194,7 @@ label {
     text-align: center;
 }
 #submit-btn {
-    background: -webkit-linear-gradient(right, #dc6500, #c5b8a9, #ff2e82, #ff2543);
+    background: -webkit-linear-gradient(right, #004494, #00A2D9, #FFFFFF, #E2001A);
     border: none;
     border-radius: 21px;
     box-shadow: 0px 1px 18px #24aec6;
@@ -243,7 +243,7 @@ label {
 }
 
 .nav_item:hover{
-    background: -webkit-linear-gradient(right, rgba(220, 101, 0, 0.5), rgba(197, 184, 169, 0.5), rgba(255, 46, 130, 0.5), rgba(255, 37, 67, 0.5));
+    background: -webkit-linear-gradient(right, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
     border-radius: 10px;
 }
 
@@ -267,14 +267,14 @@ label, ::placeholder {
 }
 
 #date_title {
-    color: #771238;
+    color: #124a77;
 }
 
 .ball {
     display: inline-block;
     width: 30px; /* Set a fixed width */
     height: 30px; /* Set a fixed height */
-    border: 2px solid #771238;
+    border: 2px solid #00A2D9;
     border-radius: 50%; /* This makes the border round */
     text-align: center; /* Center the label content */
     box-sizing: border-box; /* Include padding and border in the width and height */
@@ -282,33 +282,33 @@ label, ::placeholder {
 }
 
 .regular {
-    border: 2px solid #771238;
+    border: 2px solid #00A2D9;
 }
 
 .ia_regular {
-    border: 2px solid #771238;
-    background-color: rgba(255, 46, 130, 0.20);
+    border: 2px solid #00A2D9;
+    background-color: rgba(46, 192, 255, 0.2);
 }
 
 .chance {
-    border: 2px solid #dc6500;
+    border: 2px solid #E2001A;
 }
 
 .ia_chance {
-    border: 2px solid #dc6500;
-    background-color: rgba(220, 101, 0, 0.20);
+    border: 2px solid #E2001A;
+    background-color: rgba(220, 0, 0, 0.2);
 }
 
 .regular:hover {
-    background-color: rgba(119, 18, 56, 0.43);
+    background-color: rgba(18, 89, 119, 0.43);
 }
 
 .chance:hover {
-    background-color: rgba(220, 101, 0, 0.43);
+    background-color: rgba(220, 0, 0, 0.43);
 }
 
 .selected {
-    background-color: #ff2543;
+    background-color: #ffed25;
 }
 
 .predeecta{
@@ -358,4 +358,8 @@ dd {
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+.guessed_ball {
+    background-color: #ffed25;
 }

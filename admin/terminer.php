@@ -111,6 +111,8 @@ try {
 
     $tirageData = json_decode($tirageJson, true);
 
+    $filteredData = $tirageData['results'][0];
+
     $boules = [
         $tirageData['boule_1'],
         $tirageData['boule_2'],

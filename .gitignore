@@ -1,2 +1,5 @@
 /node_modules
+/cloud/CloudFunctions/node_modules
 /CloudFunctions/node_modules
+/data
+vendor

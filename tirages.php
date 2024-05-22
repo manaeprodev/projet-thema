@@ -52,7 +52,7 @@ while ($row = $tirages->fetch_assoc()) {
     $formattedDateTirage = $dateTirage->format('d/m/Y');
     $isDone = $row['is_done'];
     $vlTirage = $row['vl_tirage'];
-    $vlPredic = $row ['vl_prediction'];
+    $vlPredic = $row ['vl_predictions'];
     $tirageTab = array_map('intval', explode(',', $vlTirage));
     $predicTab = array_map('intval', explode(',', $vlPredic));
     $ptsGagnes = $row['pts_gagnes'];
@@ -71,25 +71,51 @@ while ($row = $tirages->fetch_assoc()) {
         foreach ($tirageTab as $key => $ballNumber) {
 
             if ($key === 5) {
-                echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd>";
+                $addedClass = "";
+                $chanceBall = end($predicTab);
+                if ($ballNumber === $chanceBall) {
+                    $addedClass = "guessed_ball";
+                }
+                echo "<dd class='predictions_balls ".$addedClass."'><label class='ball ia_chance'>$ballNumber</label></dd>";
             } else {
-                echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
+                $addedClass = "";
+                $normalBalls = array_pop($predicTab);
+                if (in_array($ballNumber, $normalBalls)) {
+                    $addedClass = "guessed_ball";
+                }
+                echo "<dd class='predictions_balls ".$addedClass."'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
             }
         }
     }
     echo "</dl>";
     echo "<dl>";
-    if (isset($ptsGagnes) && !empty($ptsGagnes) && isset($vlPredic) && !empty($vlPredic)) {
+
+    if (isset($vlPredic) && !empty($vlPredic)) {
         echo "<dd>Votre prédiction : </dd>";
         foreach ($predicTab as $key => $ballNumber) {
             if ($key === 5) {
-                echo "<dd class='predictions_balls'><label class='ball ia_chance'>$ballNumber</label></dd>";
+                $addedClass = "";
+                $chanceBall = end($tirageTab);
+                if ($ballNumber === $chanceBall) {
+                    $addedClass = "guessed_ball";
+                }
+                echo "<dd class='predictions_balls ".$addedClass."'><label class='ball ia_chance'>$ballNumber</label></dd>";
             } else {
-                echo "<dd class='predictions_balls'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
+                $addedClass = "";
+                $normalBalls = array_pop($tirageTab);
+                if (in_array($ballNumber, $normalBalls)) {
+                    $addedClass = "guessed_ball";
+                }
+                echo "<dd class='predictions_balls ".$addedClass."'><label for='ia_ball_$ballNumber' class='ball ia_regular'>$ballNumber</label></dd>";
             }
         }
-        echo "<dd>+$ptsGagnes</dd>";
-    } else {
+        if ($ptsGagnes > 1) {
+            $string = "+".$ptsGagnes." pts";
+        } else {
+            $string = "+".$ptsGagnes." pt";
+        }
+        echo "<dd>$string</dd>";
+    } elseif ($isDone === 1) {
         echo "<dd>Vous n'avez pas joué sur ce tirage.</dd>";
     }
 
