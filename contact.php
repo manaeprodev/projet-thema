@@ -30,13 +30,19 @@
             <textarea id="message" name="message" rows="5" required></textarea>
         </div>
         <div>
-            <button type="submit">Envoyer</button>
+            <button id='btn_contact' type="">Envoyer</button>
         </div>
     </form>
+    <p>> Vous pouvez aussi nous contacter directement par mail, ci-dessous.</p>
 
 </div>
 
 <?php include "components/footer.php";?>
 
 </body>
+<script>
+    document.getElementById('btn_valider').addEventListener('click', function() {
+        alert('Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.');
+    });
+</script>
 </html>

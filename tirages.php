@@ -31,7 +31,10 @@ ORDER BY
 
 
 }
+date_default_timezone_set('Europe/Paris');
 
+setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
+$dateProchain = $_SESSION['dateProchain'];
 
 ?>
 
@@ -43,6 +46,22 @@ ORDER BY
     <?php include "components/header.php";?>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+<div class="container predeecta">
+    <p>Prédisez pour le tirage du</p>
+    <h2 id="date_title"><?php
+
+        $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
+
+        echo strtoupper($dateFormatee);
+
+        echo "<script>var endDate = new Date('$dateProchain');</script>";
+        ?></h2>
+    <div class="file-input-wrapper">
+        <p>Temps avant clôture :</p>
+        <label id="countdown" class="btn-upload">
+        </label>
+    </div>
+</div>
 <?php
 
 while ($row = $tirages->fetch_assoc()) {
@@ -151,6 +170,30 @@ while ($row = $tirages->fetch_assoc()) {
 
 </body>
 <script>
+    var x = setInterval(function() {
+        // Date actuelle
+        var now = new Date().getTime();
+
+
+        var distance = endDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            allowPrediction = false;
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EXPIRÉ";
+            document.getElementById("btn_valider").hidden = true;
+            alert("La date limite de prédiction a expiré, réessayez plus tard.");
+        } else {
+            document.getElementById("btn_valider").hidden = false;
+        }
+    }, 1000);
     document.getElementById('btn_valider').addEventListener('click', function() {
         window.location.href = 'prediction.php';
     });
