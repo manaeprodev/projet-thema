@@ -27,7 +27,7 @@ function generateRandomPassword()
         $password .= $characters[rand(0, strlen($characters) - 1)];
     }
 
-    return $password;
+    return md5($password);
 }
 
 function sendResetPwdMail($email, $tempPwd, $username)
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $tempPwd = "UPDATE users SET password = ? WHERE id = ?";
             $stmt = $connexion->prepare($tempPwd);
-            $stmt->bind_param('si', $randomPwd, $idUser);
+            $stmt->bind_param('si', ($randomPwd), $idUser);
             $stmt->execute();
 
             sendResetPwdMail($email, $randomPwd, $username);
