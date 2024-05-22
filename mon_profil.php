@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $connexion->prepare($updateEmail);
         $stmt->bind_param('si', $_POST['email'], $userData[0]['id']);
     } else {
-        $updateEmail = "UPDATE users SET email = NULL, wants_emails = 0 WHERE id = ?";
+        $updateEmail = "UPDATE users SET wants_emails = 0 WHERE id = ?";
         $stmt = $connexion->prepare($updateEmail);
         $stmt->bind_param('i', $userData[0]['id']);
     }

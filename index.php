@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Se connecter">
     </form>
     <p>Pas de compte?<br><a href="register.php">Inscrivez-vous dés maintenant!</a></p>
+    <p><a href="reset_password.php">Mot de passe oublié?</a></p>
 </div>
 
 <?php include "components/footer.php";?>
