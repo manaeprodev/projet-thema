@@ -44,6 +44,33 @@ if (getenv('ENV') === 'dev') {
 
         $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
 
+
+        $translations = array(
+            'Monday' => 'Lundi',
+            'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi',
+            'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi',
+            'Saturday' => 'Samedi',
+            'Sunday' => 'Dimanche',
+            'January' => 'Janvier',
+            'February' => 'Février',
+            'March' => 'Mars',
+            'April' => 'Avril',
+            'May' => 'Mai',
+            'June' => 'Juin',
+            'July' => 'Juillet',
+            'August' => 'Août',
+            'September' => 'Septembre',
+            'October' => 'Octobre',
+            'November' => 'Novembre',
+            'December' => 'Décembre'
+        );
+
+        foreach ($translations as $eng => $fr) {
+            $dateFormatee = str_replace($eng, $fr, $dateFormatee);
+        }
+
         echo strtoupper($dateFormatee);
 
         echo "<script>var endDate = new Date('$dateProchain');</script>";

@@ -26,6 +26,33 @@ $dateProchain = $_SESSION['dateProchain'];
 
         $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
 
+
+        $translations = array(
+            'Monday' => 'Lundi',
+            'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi',
+            'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi',
+            'Saturday' => 'Samedi',
+            'Sunday' => 'Dimanche',
+            'January' => 'Janvier',
+            'February' => 'Février',
+            'March' => 'Mars',
+            'April' => 'Avril',
+            'May' => 'Mai',
+            'June' => 'Juin',
+            'July' => 'Juillet',
+            'August' => 'Août',
+            'September' => 'Septembre',
+            'October' => 'Octobre',
+            'November' => 'Novembre',
+            'December' => 'Décembre'
+        );
+
+        foreach ($translations as $eng => $fr) {
+            $dateFormatee = str_replace($eng, $fr, $dateFormatee);
+        }
+
         echo strtoupper($dateFormatee);
 
         echo "<script>var endDate = new Date('$dateProchain');</script>";
@@ -39,21 +66,21 @@ $dateProchain = $_SESSION['dateProchain'];
 <div class="container predeecta">
     <p>Choisissez 5 numéros</p>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
-    <?php for ($i=1; $i<=49; $i++) {
-        echo "<label id=\"r_$i\" for=\"ball$i\" class='ball regular'>$i</label>";
-        if ($i%10 == 0) {
-            echo "<br>";
+        <?php for ($i=1; $i<=49; $i++) {
+            echo "<label id=\"r_$i\" for=\"ball$i\" class='ball regular'>$i</label>";
+            if ($i%10 == 0) {
+                echo "<br>";
+            }
         }
-    }
-    ?>
-    <p>Choisissez votre numéro chance</p>
-    <?php for ($i=1; $i<=10; $i++) {
-        echo "<label id=\"c_$i\" for=\"ball$i\" class='ball chance'>$i</label>";
-        if ($i%5 == 0) {
-            echo "<br>";
+        ?>
+        <p>Choisissez votre numéro chance</p>
+        <?php for ($i=1; $i<=10; $i++) {
+            echo "<label id=\"c_$i\" for=\"ball$i\" class='ball chance'>$i</label>";
+            if ($i%5 == 0) {
+                echo "<br>";
+            }
         }
-    }
-    ?>
+        ?>
         <button id="btn_valider" type="button" hidden>Valider ma prédiction !</button>
         <button id="btn_clear" type="button">Effacer</button>
     </form>
@@ -62,25 +89,25 @@ $dateProchain = $_SESSION['dateProchain'];
     <p>Les conseils de Predeecta</p>
     <p>"D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!"</p>
     <div class="label_container">
-    <?php
-    $randomArray = array();
-    while (count($randomArray) < 5) {
-        $randomNumber = mt_rand(1, 49);
-        if (!in_array($randomNumber, $randomArray)) {
-            $randomArray[] = $randomNumber;
-            echo "<label for='ia_ball_$randomNumber' class='ball ia_regular ia'>$randomNumber</label>";
+        <?php
+        $randomArray = array();
+        while (count($randomArray) < 5) {
+            $randomNumber = mt_rand(1, 49);
+            if (!in_array($randomNumber, $randomArray)) {
+                $randomArray[] = $randomNumber;
+                echo "<label for='ia_ball_$randomNumber' class='ball ia_regular ia'>$randomNumber</label>";
+            }
         }
-    }
 
-    $randomNumber = mt_rand(1, 10);
-    echo "<label class='ball ia_chance ia'>$randomNumber</label>";
-    ?>
+        $randomNumber = mt_rand(1, 10);
+        echo "<label class='ball ia_chance ia'>$randomNumber</label>";
+        ?>
     </div>
     <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
     <p>"Je vous ai préparé quelques indicateurs pour vous aider!"</p>
     <dl>
-    <dt>Les 10 numéros les plus gagnants dans l'histoire du Loto : </dt>
+        <dt>Les 10 numéros les plus gagnants dans l'histoire du Loto : </dt>
         <dd class='predictions_balls'><label class='ball ia_regular'>44</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>11</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>14</label></dd>
@@ -91,11 +118,11 @@ $dateProchain = $_SESSION['dateProchain'];
         <dd class='predictions_balls'><label class='ball ia_regular'>35</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>30</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>23</label></dd>
-    <dt>Les 3 numéros chances les plus gagnants dans l'histoire du Loto : </dt>
+        <dt>Les 3 numéros chances les plus gagnants dans l'histoire du Loto : </dt>
         <dd class='predictions_balls'><label class='ball ia_chance'>3</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>6</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>9</label></dd>
-    <dt>Les 10 numéros les plus gagnants des 10 derniers tirages : </dt>
+        <dt>Les 10 numéros les plus gagnants des 10 derniers tirages : </dt>
         <dd class='predictions_balls'><label class='ball ia_regular'>23</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>3</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>45</label></dd>
@@ -106,17 +133,17 @@ $dateProchain = $_SESSION['dateProchain'];
         <dd class='predictions_balls'><label class='ball ia_regular'>39</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>4</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>49</label></dd>
-    <dt>Les 3 numéros chances les plus gagnants des 10 derniers tirages : </dt>
+        <dt>Les 3 numéros chances les plus gagnants des 10 derniers tirages : </dt>
         <dd class='predictions_balls'><label class='ball ia_chance'>9</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>1</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>5</label></dd>
-    <dt>Les numéros les moins sortis dans l'histoire du Loto : </dt>
+        <dt>Les numéros les moins sortis dans l'histoire du Loto : </dt>
         <dd class='predictions_balls'><label class='ball ia_regular'>24</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>46</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>22</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>2</label></dd>
         <dd class='predictions_balls'><label class='ball ia_regular'>36</label></dd>
-    <dt>Les numéros chances les moins sortis dans l'histoire du Loto : </dt>
+        <dt>Les numéros chances les moins sortis dans l'histoire du Loto : </dt>
         <dd class='predictions_balls'><label class='ball ia_chance'>5</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>8</label></dd>
         <dd class='predictions_balls'><label class='ball ia_chance'>2</label></dd>
@@ -159,18 +186,18 @@ $dateProchain = $_SESSION['dateProchain'];
     var selectedRegularBalls;
     regularBalls.forEach(function(regularBall) {
         regularBall.addEventListener('click', function () {
-                if (this.classList.contains('selected')) {
-                    this.classList.remove('selected');
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+            } else {
+                selectedRegularBalls = document.querySelectorAll('.selected.regular');
+                if (selectedRegularBalls.length < MAX_REGULAR_BALLS) {
+                    this.classList.add('selected');
                 } else {
-                    selectedRegularBalls = document.querySelectorAll('.selected.regular');
-                    if (selectedRegularBalls.length < MAX_REGULAR_BALLS) {
-                        this.classList.add('selected');
-                    } else {
-                        alert('Maximum ' + MAX_REGULAR_BALLS + ' boule(s) à sélectionner.');
-                    }
+                    alert('Maximum ' + MAX_REGULAR_BALLS + ' boule(s) à sélectionner.');
                 }
-            });
+            }
         });
+    });
 
     chanceBalls.forEach(function(chanceBall) {
         chanceBall.addEventListener('click', function () {

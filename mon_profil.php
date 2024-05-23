@@ -169,6 +169,10 @@ if ($_GET['redirect'] === 'menu') {
 <div class="container predeecta">
     <h2>Mes stats</h2>
     <dl>
+        <dt>Points</dt>
+        <dd><?= $userData[0]['pts']?></dd>
+        <dt>Prestige</dt>
+        <dd><?= $userData[0]['prestige']?></dd>
         <dt>Nombre de prédictions totales</dt>
         <dd><?= $nbPredic;?></dd>
         <dt>Précision des prédictions</dt>

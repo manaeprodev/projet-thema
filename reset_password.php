@@ -1,14 +1,6 @@
 <?php
 
 session_start();
-$data = array();
-if (getenv('ENV') === 'dev') {
-    $_SESSION['user'] = array();
-    $_SESSION['user'][0]['username'] = "TIRYAKT";
-} elseif (!isset($_SESSION['user'])) {
-
-    header("Location: index.php?inscription_reussie=2");
-}
 
 function generateRandomPassword()
 {
@@ -32,7 +24,7 @@ function generateRandomPassword()
 
 function sendResetPwdMail($email, $tempPwd, $username)
 {
-    require './vendor';
+    require './vendor/autoload.php';
 
     $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
         ->setUsername(getenv('GOOGLE_EMAIL'))
@@ -73,7 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param('si', $randomPwd, $idUser);
             $stmt->execute();
 
-            sendResetPwdMail($email, $randomPwd, $username);
+            if (!empty($email)) {
+                sendResetPwdMail($email, $randomPwd, $username);
+            }
+            header('Location: index.php?inscription_reussie=6');
+
         }
 
 

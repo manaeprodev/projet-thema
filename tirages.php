@@ -15,7 +15,7 @@ if (getenv('ENV') === 'dev') {
     u.vl_prediction AS vl_predictions, 
     u.pts_gagnes
 FROM 
-    ((SELECT * FROM tirages WHERE is_done = 1)
+    ((SELECT * FROM tirages WHERE is_done = 1 AND id >= 17)
     UNION
     (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1)) AS t
 LEFT JOIN 
@@ -24,8 +24,8 @@ ORDER BY
     t.date_tirage DESC;
 
 ";
-    $stmt->bind_param('s', $_SESSION['user'][0]['username']);
     $stmt = $connexion->prepare($requete);
+    $stmt->bind_param('i', $_SESSION['user'][0]['id']);
     $stmt->execute();
     $tirages = $stmt->get_result();
     $stmt->close();
@@ -52,6 +52,32 @@ $dateProchain = $_SESSION['dateProchain'];
     <h2 id="date_title"><?php
 
         $dateFormatee = strftime("%A %d %B %Y", strtotime($dateProchain));
+
+        $translations = array(
+            'Monday' => 'Lundi',
+            'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi',
+            'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi',
+            'Saturday' => 'Samedi',
+            'Sunday' => 'Dimanche',
+            'January' => 'Janvier',
+            'February' => 'Février',
+            'March' => 'Mars',
+            'April' => 'Avril',
+            'May' => 'Mai',
+            'June' => 'Juin',
+            'July' => 'Juillet',
+            'August' => 'Août',
+            'September' => 'Septembre',
+            'October' => 'Octobre',
+            'November' => 'Novembre',
+            'December' => 'Décembre'
+        );
+
+        foreach ($translations as $eng => $fr) {
+            $dateFormatee = str_replace($eng, $fr, $dateFormatee);
+        }
 
         echo strtoupper($dateFormatee);
 

@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             header("Location: mon_profil.php?redirect=menu");
         } else {
-            header("Location: index.php?error=2");
+            header("Location: index.php?inscription_reussie=7");
         }
     }
 }
@@ -90,6 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
                 case '5':
                     alert('Votre compte a bien été supprimé définitivement. Merci d\'avoir utilisé Predeect.');
+                    break;
+                case '6':
+                    alert('Si votre nom d\'utilisateur ou votre e-mail est reconnu, alors la procédure de changement de mot de passe vous sera envoyée sous peu.');
+                    break;
+                case '7':
+                    alert('Nom d\'utilisateur ou mot de passe incorrect.');
                     break;
                 default:
                     break;
