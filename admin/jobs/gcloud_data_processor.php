@@ -23,7 +23,7 @@ function pushDataToDb($idTirage, $boulesString)
 function pushToBucket($fileToPush, $targetBucket)
 {
     require_once 'auth.php';
-    $objectName = date('Y-m-d') . ".json";
+    $objectName = date('Y-m-d', strtotime('-1 day')) . ".json";
     $source = "results/resultats_loto.json";
     $bucket = $storage->bucket($targetBucket);
 

@@ -114,12 +114,12 @@ try {
     $filteredData = $tirageData['results'][0];
 
     $boules = [
-        $tirageData['boule_1'],
-        $tirageData['boule_2'],
-        $tirageData['boule_3'],
-        $tirageData['boule_4'],
-        $tirageData['boule_5'],
-        $tirageData['numero_chance']
+        $filteredData['boule_1'],
+        $filteredData['boule_2'],
+        $filteredData['boule_3'],
+        $filteredData['boule_4'],
+        $filteredData['boule_5'],
+        $filteredData['numero_chance']
     ];
 
     $boulesString = implode(',', $boules);

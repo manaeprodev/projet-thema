@@ -19,11 +19,12 @@ FROM
     UNION
     (SELECT * FROM tirages WHERE is_done = 0 ORDER BY date_tirage ASC LIMIT 1)) AS t
 LEFT JOIN 
-    user_predictions AS u ON t.id = u.id_tirage AND u.id_user = 7
+    user_predictions AS u ON t.id = u.id_tirage AND u.id_user = ?
 ORDER BY 
     t.date_tirage DESC;
 
 ";
+    $stmt->bind_param('s', $_SESSION['user'][0]['username']);
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
     $tirages = $stmt->get_result();
