@@ -99,14 +99,14 @@ if ($_GET['redirect'] === 'menu') {
         <dt>Date de dernière connexion</dt>
         <dd><?= $userData[0]['lastUpdatedDate']?></dd>
         <dt>E-mail de contact</dt>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
-        <dd><input type="email" name="email" placeholder="exemple123@yopmail.com" value="<?php
-        if (!empty($userData[0]['lastUpdatedDate'])) {
-            echo htmlspecialchars($userData[0]['email'], ENT_QUOTES, 'UTF-8');
-        } ?>"></dd>
-        <input type="submit" value="Mettre à jour mon e-mail">
-        <p>Laisser vide pour désactiver les notifications.</p>
-    </form>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+            <dd><input type="email" name="email" placeholder="exemple123@yopmail.com" value="<?php
+                if (!empty($userData[0]['lastUpdatedDate'])) {
+                    echo htmlspecialchars($userData[0]['email'], ENT_QUOTES, 'UTF-8');
+                } ?>"></dd>
+            <input type="submit" value="Mettre à jour mon e-mail">
+            <p>Laisser vide pour désactiver les notifications.</p>
+        </form>
     </dl>
     <a id="deco" href="index.php?disconnected=1">Se déconnecter</a>
 </div>
@@ -181,12 +181,58 @@ if ($_GET['redirect'] === 'menu') {
 </div>
 <div class="container predeecta">
     <h2>Mes données</h2>
-    <a class="btn-delete-account" href="deleteAccount.php?mode=1&idUser=<?= $userData[0]['id']?>">Anonymiser mes données</a>
-    <a class="btn-delete-account" href="deleteAccount.php?mode=2&idUser=<?= $userData[0]['id']?>">Supprimer mon compte définitivement</a>
+    <a id='btn-anonymize' class="btn-delete-account" href="index.php?inscription_reussie=4">Anonymiser mes données</a>
+    <a id='btn-delete' class="btn-delete-account" href="index.php?inscription_reussie=5">Supprimer mon compte définitivement</a>
+    <input id="idUser" hidden value="<?= $userData[0]['id']?>">
 </div>
 <?php include "components/footer.php";?>
 
 </body>
 <script>
+    document.getElementById('btn-anonymize').addEventListener('click', function () {
+        var confirmation = confirm("Voulez-vous vraiment anonymiser vos données ? Cette action est irréversible.");
+
+        var idUser = document.getElementById('idUser').value;
+
+        if (confirmation) {
+            $.ajax({
+                url: 'deleteAccount.php',
+                type: 'GET',
+                data: {
+                    mode: 1,
+                    idUser: idUser
+                },
+                success: function(response) {
+                    console.log('La requête a réussi ! Réponse du serveur : ', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('La requête a échoué avec le statut : ' + status);
+                }
+            });
+        }
+    });
+
+    document.getElementById('btn-delete').addEventListener('click', function () {
+        var confirmation = confirm("Voulez-vous vraiment supprimer toutes vos données ? Cette action est irréversible");
+
+        var idUser = document.getElementById('idUser').value;
+
+        if (confirmation) {
+            $.ajax({
+                url: 'deleteAccount.php',
+                type: 'GET',
+                data: {
+                    mode: 2,
+                    idUser: idUser
+                },
+                success: function(response) {
+                    console.log('La requête a réussi ! Réponse du serveur : ', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('La requête a échoué avec le statut : ' + status);
+                }
+            });
+        }
+    });
 </script>
 </html>

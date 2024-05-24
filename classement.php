@@ -7,7 +7,7 @@ if (getenv('ENV') === 'dev') {
 } else {
     require("components/connexion.php");
 
-    $requete = "SELECT username,prec,pts,RANK() OVER (ORDER BY pts DESC) AS rang FROM users 
+    $requete = "SELECT username,prec,pts,prestige,RANK() OVER (ORDER BY pts DESC) AS rang FROM users 
 WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
@@ -28,20 +28,23 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
         <tr>
             <th>Rang</th>
             <th>Joueur</th>
-            <th>Points</th>
+            <th>Prestige</th>
             <th>Précision</th>
+            <th>Points</th>
         </tr>
         <?php while ($row = $rankResult->fetch_assoc()) {
             $username = $row['username'];
             $prec = $row['prec'];
             $pts = $row['pts'];
+            $prestige = $row['prestige'];
             $rang = $row['rang'];
 
             echo "<tr>";
             echo "<td>$rang</td>";
             echo "<td>$username</td>";
-            echo "<td>$pts</td>";
+            echo "<td>$prestige</td>";
             echo "<td>$prec%</td>";
+            echo "<td>$pts</td>";
             echo "</tr>";
         }?>
     </table>
