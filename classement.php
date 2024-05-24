@@ -7,7 +7,7 @@ if (getenv('ENV') === 'dev') {
 } else {
     require("components/connexion.php");
 
-    $requete = "SELECT username,prec,pts,prestige,RANK() OVER (ORDER BY pts DESC) AS rang FROM users 
+    $requete = "SELECT id,username,prec,pts,prestige,RANK() OVER (ORDER BY pts DESC) AS rang FROM users 
 WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
@@ -33,6 +33,7 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
             <th class="score_head">Précision</th>
         </tr>
         <?php while ($row = $rankResult->fetch_assoc()) {
+            $idUser = $row['id'];
             $username = $row['username'];
             $prec = $row['prec'];
             $pts = $row['pts'];
@@ -40,7 +41,7 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
             $rang = $row['rang'];
             $addedClass = "";
 
-            if ($rang === 1) {
+            if ($_SESSION['user'][0]['id'] == $idUser) {
                 $addedClass = "first_player";
             }
 

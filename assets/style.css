@@ -383,11 +383,10 @@ dd {
 }
 
 table {
-    border-collapse: separate; /* Séparer les bordures pour pouvoir les arrondir */
-    border-spacing: 0; /* Éliminer tout espace entre les bordures */
-    border: 1px solid #000; /* Bordure de secours si le HTML n'en fournit pas */
-    width: 100%; /* Utiliser la largeur maximale disponible */
-    max-width: 100%; /* Ne pas dépasser la largeur maximale disponible */
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 table td, table th {
@@ -396,16 +395,15 @@ table td, table th {
 }
 
 table {
-    border-radius: 10px; /* Arrondir les coins de la table */
+    border-radius: 10px;
 }
 
-/* Facultatif : arrondir les coins des cellules individuelles */
 table td:first-child {
-    border-top-left-radius: 10px; /* Coin supérieur gauche */
-    border-bottom-left-radius: 10px; /* Coin inférieur gauche */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 table td:last-child {
-    border-top-right-radius: 10px; /* Coin supérieur droit */
-    border-bottom-right-radius: 10px; /* Coin inférieur droit */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
