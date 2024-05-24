@@ -25,12 +25,12 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
 </head>
 <div class='container'>
     <table border="1">
-        <tr>
-            <th>Rang</th>
-            <th>Joueur</th>
-            <th>Prestige</th>
-            <th>Précision</th>
-            <th>Points</th>
+        <tr class="score_table">
+            <th class="score_head">Rang</th>
+            <th class="score_head">Joueur</th>
+            <th class="score_head pts">Points</th>
+            <th class="score_head">Prestige</th>
+            <th class="score_head">Précision</th>
         </tr>
         <?php while ($row = $rankResult->fetch_assoc()) {
             $username = $row['username'];
@@ -38,13 +38,18 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
             $pts = $row['pts'];
             $prestige = $row['prestige'];
             $rang = $row['rang'];
+            $addedClass = "";
+
+            if ($rang === 1) {
+                $addedClass = "first_player";
+            }
 
             echo "<tr>";
-            echo "<td>$rang</td>";
-            echo "<td>$username</td>";
-            echo "<td>$prestige</td>";
-            echo "<td>$prec%</td>";
-            echo "<td>$pts</td>";
+            echo "<td class='$addedClass'>$rang</td>";
+            echo "<td class='$addedClass'>$username</td>";
+            echo "<td class='$addedClass pts'>$pts</td>";
+            echo "<td class='$addedClass'>$prestige</td>";
+            echo "<td class='$addedClass'>$prec%</td>";
             echo "</tr>";
         }?>
     </table>

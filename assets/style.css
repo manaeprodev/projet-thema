@@ -363,3 +363,21 @@ dd {
 .guessed_ball {
     background-color: #ffed25;
 }
+
+.score_head { /*th*/
+    color: #004494;
+    background-color: #a6e6ea;
+    padding: 2%;
+}
+
+.first_player { /*td*/
+    color: rgb(143, 0, 0); !important;
+    background-color: #fff592; !important;
+
+}
+
+.pts { /*td*/
+    background-color: #a6e6ea;
+    color: #004494;
+
+}
