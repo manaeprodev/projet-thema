@@ -370,14 +370,42 @@ dd {
     padding: 2%;
 }
 
+.pts { /*td*/
+    background-color: #a6e6ea;
+    color: #004494;
+
+}
+
 .first_player { /*td*/
     color: rgb(143, 0, 0); !important;
     background-color: #fff592; !important;
 
 }
 
-.pts { /*td*/
-    background-color: #a6e6ea;
-    color: #004494;
+table {
+    border-collapse: separate; /* Séparer les bordures pour pouvoir les arrondir */
+    border-spacing: 0; /* Éliminer tout espace entre les bordures */
+    border: 1px solid #000; /* Bordure de secours si le HTML n'en fournit pas */
+    width: 100%; /* Utiliser la largeur maximale disponible */
+    max-width: 100%; /* Ne pas dépasser la largeur maximale disponible */
+}
 
+table td, table th {
+    border: 1px solid #000; /* Bordure de secours si le HTML n'en fournit pas */
+    padding: 8px; /* Espacement interne des cellules */
+}
+
+table {
+    border-radius: 10px; /* Arrondir les coins de la table */
+}
+
+/* Facultatif : arrondir les coins des cellules individuelles */
+table td:first-child {
+    border-top-left-radius: 10px; /* Coin supérieur gauche */
+    border-bottom-left-radius: 10px; /* Coin inférieur gauche */
+}
+
+table td:last-child {
+    border-top-right-radius: 10px; /* Coin supérieur droit */
+    border-bottom-right-radius: 10px; /* Coin inférieur droit */
 }

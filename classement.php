@@ -24,7 +24,7 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
     <link rel="stylesheet" href="../assets/style.css">
 </head>
 <div class='container'>
-    <table border="1">
+    <table>
         <tr class="score_table">
             <th class="score_head">Rang</th>
             <th class="score_head">Joueur</th>
@@ -45,7 +45,7 @@ WHERE id NOT IN (1,2,3,4) ORDER BY pts DESC;";
             }
 
             echo "<tr>";
-            echo "<td class='$addedClass'>$rang</td>";
+            echo "<td class='$addedClass pts'>$rang</td>";
             echo "<td class='$addedClass'>$username</td>";
             echo "<td class='$addedClass pts'>$pts</td>";
             echo "<td class='$addedClass'>$prestige</td>";
