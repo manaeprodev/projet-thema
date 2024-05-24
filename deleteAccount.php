@@ -6,7 +6,7 @@ $idUser = $_GET['idUser'];
 
 switch ($_GET['mode']) {
     case 1:
-        $requete = "UPDATE users SET username = CONCAT('Player', ?), email = NULL, wants_emails = 0, is_admin = 0, password = '%%%%%%%%%%%%%%%%%%%%' FROM users WHERE id = ?";
+        $requete = "UPDATE users SET username = CONCAT('Player', ?), email = NULL, wants_emails = 0, is_admin = 0, password = '%%%%%%%%%%%%%%%%%%%%' WHERE id = ?";
         $stmt = $connexion->prepare($requete);
         $stmt->bind_param('si', $idUser, $idUser);
         $stmt->execute();

@@ -27,8 +27,14 @@ $nbPredictions = $stmtAll->get_result()->num_rows;
     <h2>Paramétrage</h2>
     <p>Vous pouvez paramétrer l'IA lors de son prochain entraînement. Les valeurs entrées vont influer sur le temps d'apprentissage de l'IA.</p>
     <form>
-        <label for="integer-input">Epoch (entre 100 et 2000) :</label>
+        <label for="integer-input">Epoch :</label>
         <input type="number" id="integer-input" name="integer-input" min="100" max="2000" step="1" value="100">
+        <label for="learning-input">Learning rate :</label>
+        <input type="number" id="learning-input" name="learning-input" min="0.1" max="1" step="0.1" value="0.2">
+        <label for="verbose">Verbose :</label>
+        <input type="number" id="verbose" name="verbose" min="0" max="3" step="1" value="2">
+        <label for="batch-size">Batch size :</label>
+        <input type="number" id="batch-size" name="batch-size" min="200" max="20000" step="200" value="10000">
         <input type="submit" value="Envoyer">
     </form>
 </div>
