@@ -59,3 +59,18 @@ function getLastAiParams() {
 
     return $mostRecentObject;
 }
+
+function pushAiParams($file) {
+    require 'auth.php';
+
+    $bucket = $storage->bucket('ai_params');
+
+    $object = $bucket->upload(
+        fopen($file, 'r'),
+        [
+            'name' => $file
+        ]
+    );
+
+    echo "Le fichier $file a été uploadé dans le bucket ai_params.";
+}

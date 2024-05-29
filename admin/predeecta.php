@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         file_put_contents($filename, $jsonData);
 
-        pushToBucket($filename, 'ai_params');
+        pushAiParams($filename);
 
         header('Location : predeecta.php?return=1');
     } catch (Exception $e) {
