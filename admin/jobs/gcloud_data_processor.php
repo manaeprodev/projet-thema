@@ -57,7 +57,11 @@ function getLastAiParams() {
         }
     }
 
-    return $mostRecentObject;
+    if ($mostRecentObject) {
+        return $mostRecentObject->downloadAsString();
+    }
+
+    return null;
 }
 
 function pushAiParams($file) {

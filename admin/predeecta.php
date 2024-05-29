@@ -47,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         pushAiParams($filename);
 
-        header('Location : predeecta.php?return=1');
+        header('Location: predeecta.php?return=1');
     } catch (Exception $e) {
-        header('Location : predeecta.php?return=2');
+        header('Location: predeecta.php?return=2');
     }
 
 }
