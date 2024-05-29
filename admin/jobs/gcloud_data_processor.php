@@ -37,3 +37,25 @@ function pushToBucket($fileToPush, $targetBucket)
     echo "Le fichier $fileToPush a été uploadé dans le bucket $targetBucket avec le nom $objectName.";
 
 }
+
+function getLastAiParams() {
+    require_once 'auth.php';
+
+    $bucket = $storage->bucket('ai_params');
+    $objects = $bucket->objects();
+
+    $mostRecentObject = null;
+    $mostRecentTimestamp = null;
+
+    foreach ($objects as $object) {
+        $info = $object->info();
+        $updated = new DateTime($info['updated']);
+
+        if (is_null($mostRecentTimestamp) || $updated > $mostRecentTimestamp) {
+            $mostRecentObject = $object;
+            $mostRecentTimestamp = $updated;
+        }
+    }
+
+    return $mostRecentObject;
+}

@@ -98,7 +98,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Valider">
     </form>
     <p>Entrez votre nom d'utilisateur ou bien votre e-mail. Si votre compte est retrouvé, vous recevrez par mail la procédure de réinitialisation de votre mot de passe.</p>
-    <p><a href="reset_password.php">Mot de passe oublié?</a></p>
 </div>
 
 <?php include "components/footer.php";?>

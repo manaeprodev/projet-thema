@@ -358,6 +358,15 @@ dd {
         margin-left: 0;
         margin-right: 0;
     }
+
+    table {
+        font-size:13px;
+    }
+
+    .score_head {
+        padding: 0;
+        font-size: 9px;
+    }
 }
 
 .guessed_ball {
