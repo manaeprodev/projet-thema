@@ -16,7 +16,7 @@ from google.cloud.storage import blob
 ### Prediction Tirage
 
 # Importer le fichier CSV
-lottery_data = pd.read_csv('D:\Projets\Master_CCM\projet-thema\cloud\IA\Files\query_result.csv')
+lottery_data = pd.read_csv('query_result.csv')
 
 data = lottery_data[['boule_1','boule_2','boule_3','boule_4','boule_5',]]
 dataset = data.values.tolist()
@@ -68,7 +68,7 @@ print(f'Prédiction: {prediction}')
 
 ### Prediction Numero Chance
 
-import_luck_data = pd.read_csv('D:\Projets\Master_CCM\projet-thema\cloud\IA\Files\query_luck_result.csv')
+import_luck_data = pd.read_csv('query_luck_result.csv')
 
 luck_data = import_luck_data[['numero_chance']]
 luck_dataset = luck_data.values.tolist()

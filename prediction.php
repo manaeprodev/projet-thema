@@ -16,6 +16,7 @@ setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
 $dateProchain = $_SESSION['dateProchain'];
 
 $lastPredeection = getLastPredeection();
+$lastPredeectionTab = explode(",", $lastPredeection);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -94,8 +95,14 @@ $lastPredeection = getLastPredeection();
     <p>Les conseils de Predeecta</p>
     <p>"D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!"</p>
     <div class="label_container">
-
+        <label for="ia_ball_<?=$lastPredeectionTab[0]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[0]?></label>
+        <label for="ia_ball_<?=$lastPredeectionTab[1]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[1]?></label>
+        <label for="ia_ball_<?=$lastPredeectionTab[2]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[2]?></label>
+        <label for="ia_ball_<?=$lastPredeectionTab[3]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[3]?></label>
+        <label for="ia_ball_<?=$lastPredeectionTab[4]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[4]?></label>
+        <label class="ball ia_chance ia"><?=$lastPredeectionTab[5]?></label>
     </div>
+    <button id="btn_ecouter_ia_pred" type="button">Je fais confiance en Predeecta !</button>
     <p>"Vous pouvez aussi choisir ces numéros générés aléatoirement!"</p>
     <div class="label_container">
         <?php
@@ -104,15 +111,15 @@ $lastPredeection = getLastPredeection();
             $randomNumber = mt_rand(1, 49);
             if (!in_array($randomNumber, $randomArray)) {
                 $randomArray[] = $randomNumber;
-                echo "<label for='ia_ball_$randomNumber' class='ball ia_regular ia'>$randomNumber</label>";
+                echo "<label for='ia_ball_$randomNumber' class='ball ia_regular ia_rand'>$randomNumber</label>";
             }
         }
 
         $randomNumber = mt_rand(1, 10);
-        echo "<label class='ball ia_chance ia'>$randomNumber</label>";
+        echo "<label class='ball ia_chance ia_rand'>$randomNumber</label>";
         ?>
     </div>
-    <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
+    <button id="btn_ecouter_ia" type="button">J'utilise l'aléatoire.</button>
 </div>
 <div class="container predeecta">
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
@@ -286,6 +293,23 @@ $lastPredeection = getLastPredeection();
     });
 
     document.getElementById('btn_ecouter_ia').addEventListener('click', function () {
+        var elementsWithIAClass = document.getElementsByClassName('ia_rand');
+        clear();
+
+        for (var i = 0; i < elementsWithIAClass.length; i++) {
+            if (i === elementsWithIAClass.length - 1) {
+                document.getElementById('c_' + elementsWithIAClass[i].textContent).classList.add('selected');
+            } else {
+                document.getElementById('r_' + elementsWithIAClass[i].textContent).classList.add('selected');
+            }
+
+        }
+        selectedRegularBalls = document.querySelectorAll('.selected.regular');
+        selectedChanceBalls = document.querySelectorAll('.selected.chance');
+        alert('Les boules aléatoires ont été sélectionnées, vous pouvez valider votre prédiction.');
+    });
+
+    document.getElementById('btn_ecouter_ia_pred').addEventListener('click', function () {
         var elementsWithIAClass = document.getElementsByClassName('ia');
         clear();
 

@@ -1,5 +1,7 @@
 <?php
 
+use Google\Cloud\Storage\StorageClient;
+
 function getData($date, $bucket, $ext)
 {
     require_once 'auth.php';
@@ -80,7 +82,11 @@ function pushAiParams($file) {
 }
 
 function getLastPredeection() {
-    require 'auth.php';
+    require 'vendor/autoload.php';
+
+    $storage = new StorageClient([
+        'keyFile' => json_decode(file_get_contents('admin/'.getenv('GOOGLE_KEY_DIR')), true)
+    ]);
 
     $bucket = $storage->bucket('predeections');
     $objects = $bucket->objects();
