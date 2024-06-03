@@ -78,3 +78,29 @@ function pushAiParams($file) {
 
     echo "Le fichier $file a été uploadé dans le bucket ai_params.";
 }
+
+function getLastPredeection() {
+    require 'auth.php';
+
+    $bucket = $storage->bucket('predeections');
+    $objects = $bucket->objects();
+
+    $mostRecentObject = null;
+    $mostRecentTimestamp = null;
+
+    foreach ($objects as $object) {
+        $info = $object->info();
+        $updated = new DateTime($info['updated']);
+
+        if (is_null($mostRecentTimestamp) || $updated > $mostRecentTimestamp) {
+            $mostRecentObject = $object;
+            $mostRecentTimestamp = $updated;
+        }
+    }
+
+    if ($mostRecentObject) {
+        return $mostRecentObject->downloadAsString();
+    }
+
+    return null;
+}

@@ -6,7 +6,7 @@ if (getenv('ENV') === 'dev') {
     header("Location: index.php?inscription_reussie=2");
 } else {
     require("../components/connexion.php");
-    $requete = "SELECT * FROM tirages WHERE date_tirage <= CONCAT(CURDATE(), ' 23:59:59') ORDER BY date_tirage DESC";
+    $requete = "SELECT * FROM tirages WHERE date_tirage <= CONCAT(CURDATE(), ' 23:59:59') ORDER BY date_tirage DESC LIMIT 10";
     $stmt = $connexion->prepare($requete);
     $stmt->execute();
     $result = $stmt->get_result();

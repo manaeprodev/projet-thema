@@ -1,4 +1,7 @@
 <?php
+
+require "admin/jobs/gcloud_data_processor.php";
+
 session_start();
 if (getenv('ENV') === 'dev') {
 
@@ -11,6 +14,8 @@ date_default_timezone_set('Europe/Paris');
 
 setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
 $dateProchain = $_SESSION['dateProchain'];
+
+$lastPredeection = getLastPredeection();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -89,6 +94,10 @@ $dateProchain = $_SESSION['dateProchain'];
     <p>Les conseils de Predeecta</p>
     <p>"D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!"</p>
     <div class="label_container">
+
+    </div>
+    <p>"Vous pouvez aussi choisir ces numéros générés aléatoirement!"</p>
+    <div class="label_container">
         <?php
         $randomArray = array();
         while (count($randomArray) < 5) {
@@ -104,6 +113,8 @@ $dateProchain = $_SESSION['dateProchain'];
         ?>
     </div>
     <button id="btn_ecouter_ia" type="button">Je fais confiance en Predeecta</button>
+</div>
+<div class="container predeecta">
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
     <p>"Je vous ai préparé quelques indicateurs pour vous aider!"</p>
     <dl>
