@@ -110,3 +110,26 @@ function getLastPredeection() {
 
     return null;
 }
+
+function checkData($normalBalls) {
+    $valeursUniques = [];
+
+    foreach ($normalBalls as $valeur) {
+        $ogValeur = $valeur;
+        if (!in_array($valeur, $valeursUniques)) {
+            $valeursUniques[] = $valeur;
+        } else {
+            do {
+                if ($ogValeur >= 25) {
+                    $valeur--;
+                } else {
+                    $valeur++;
+                }
+            } while (in_array($valeur, $valeursUniques));
+
+            $valeursUniques[] = $valeur;
+        }
+    }
+
+    return $valeursUniques;
+}

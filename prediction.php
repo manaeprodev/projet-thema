@@ -16,7 +16,11 @@ setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
 $dateProchain = $_SESSION['dateProchain'];
 
 $lastPredeection = getLastPredeection();
-$lastPredeectionTab = explode(",", $lastPredeection);
+$lastPredeectionData = json_decode($lastPredeection, true);
+$normalBallsData = $lastPredeectionData['prediction'][0];
+$chanceBallData = $lastPredeectionData['numero_chance'][0];
+
+$normalBallsData = checkData($normalBallsData);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -93,17 +97,29 @@ $lastPredeectionTab = explode(",", $lastPredeection);
 </div>
 <div class="container predeecta">
     <p>Les conseils de Predeecta</p>
-    <p>"D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber!"</p>
+    <table class="no-border-table">
+        <tr>
+            <td class="no-border-td"><p class="p-left">"Je suis Predeecta, votre assistante de prédiction virtuelle. D'après mes calculs, voici les numéros qui sont le plus susceptible de tomber !"</p>
+                <p class="p-left">"Bonne chance !"</p></td>
+            <td class="no-border-td"><img id="predeecta_img" src="assets/ia.png" alt="Predeecta"></td>
+        </tr>
+    </table>
     <div class="label_container">
-        <label for="ia_ball_<?=$lastPredeectionTab[0]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[0]?></label>
-        <label for="ia_ball_<?=$lastPredeectionTab[1]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[1]?></label>
-        <label for="ia_ball_<?=$lastPredeectionTab[2]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[2]?></label>
-        <label for="ia_ball_<?=$lastPredeectionTab[3]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[3]?></label>
-        <label for="ia_ball_<?=$lastPredeectionTab[4]?>" class="ball ia_regular ia"><?=$lastPredeectionTab[4]?></label>
-        <label class="ball ia_chance ia"><?=$lastPredeectionTab[5]?></label>
+        <label for="ia_ball_<?=$normalBallsData[0]?>" class="ball ia_regular ia"><?=$normalBallsData[0]?></label>
+        <label for="ia_ball_<?=$normalBallsData[1]?>" class="ball ia_regular ia"><?=$normalBallsData[1]?></label>
+        <label for="ia_ball_<?=$normalBallsData[2]?>" class="ball ia_regular ia"><?=$normalBallsData[2]?></label>
+        <label for="ia_ball_<?=$normalBallsData[3]?>" class="ball ia_regular ia"><?=$normalBallsData[3]?></label>
+        <label for="ia_ball_<?=$normalBallsData[4]?>" class="ball ia_regular ia"><?=$normalBallsData[4]?></label>
+        <label class="ball ia_chance ia"><?=$chanceBallData[0]?></label>
     </div>
     <button id="btn_ecouter_ia_pred" type="button">Je fais confiance en Predeecta !</button>
-    <p>"Vous pouvez aussi choisir ces numéros générés aléatoirement!"</p>
+    <table class="no-border-table">
+        <tr>
+            <td class="no-border-td"><p class="p-left">"Vous pouvez aussi choisir ces numéros générés aléatoirement ! Rafraîchissez la page pour obtenir une nouvelle sélection aléatoire."</p></td>
+            <td class="no-border-td"><img id="predeecta_img" src="assets/ia.png" alt="Predeecta"></td>
+        </tr>
+    </table>
+
     <div class="label_container">
         <?php
         $randomArray = array();
@@ -120,10 +136,17 @@ $lastPredeectionTab = explode(",", $lastPredeection);
         ?>
     </div>
     <button id="btn_ecouter_ia" type="button">J'utilise l'aléatoire.</button>
+
 </div>
 <div class="container predeecta">
+    <p>Les chiffres clefs du Loto</p>
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['username']?>" hidden>
-    <p>"Je vous ai préparé quelques indicateurs pour vous aider!"</p>
+    <table class="no-border-table">
+        <tr>
+            <td class="no-border-td"><p class="p-left">"Je vous ai préparé quelques indicateurs pour vous aider ! Utilisez-les pour aiguiser vos prédictions !"</p></td>
+            <td class="no-border-td"><img id="predeecta_img" src="assets/ia.png" alt="Predeecta"></td>
+        </tr>
+    </table>
     <dl>
         <dt>Les 10 numéros les plus gagnants dans l'histoire du Loto : </dt>
         <dd class='predictions_balls'><label class='ball ia_regular'>44</label></dd>

@@ -14,6 +14,14 @@ $stmtAll = $connexion->prepare($requeteAll);
 $stmtAll->execute();
 $nbPredictions = $stmtAll->get_result()->num_rows;
 
+$requeteStatus = "SELECT ias.id, ias.status, ias.dt_status, ias.id_user, u.username FROM ia_status ias INNER JOIN users u ON ias.id_user = u.id ORDER BY dt_status DESC LIMIT 1";
+$stmt = $connexion->prepare($requeteStatus);
+$stmt->execute();
+$resultStatus = $stmt->get_result();
+$stmt->close();
+
+$status = $resultStatus->fetch_row();
+
 $lastParamsData = [
     'epoch' => 100,
     'learning_rate' => 0.2,
@@ -97,8 +105,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 <div class="container predeecta">
     <h2>Entraînement automatique</h2>
-    <p>Quand cette option est activée, l'IA sera entraînée automatiquement tous les jours à 03:00 du matin</p>
-    <button id="btn_auto" type="button">Désactivé</button>
+    <p>Quand cette option est activée, l'IA sera entraînée automatiquement tous les jours à 04:00 du matin.</p>
+    <input id="user" type="submit" value="<?= $_SESSION['user'][0]['id']?>" hidden>
+    <?php
+    if ($status[1] === 1) {
+        echo "<button id='btn_auto_active' type='button'>Activé</button>";
+        echo "<p>Dernière modification par $status[4]<br>le $status[2]</p>";
+    } elseif ($status[1] === 0) {
+        echo "<button id='btn_auto_desactive' type='button'>Désactivé</button>";
+    }
+    ?>
+
 </div>
 
 <?php include "../components/footer.php";?>
@@ -112,12 +129,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             data: {},
             success: function(response) {
                 console.log(response);
-                alert('Erreur : L\'entraînement a débuté. Veuillez patienter quelques instants.');
+                alert('L\'entraînement a débuté. Veuillez patienter quelques instants.');
                 window.location.href = 'predeecta.php';
             },
             error: function(xhr, status, error) {
                 console.error(error);
                 alert('Une erreur est survenue lors de l\'entraînement de l\'IA. Veuillez réessayer.');
+            }
+        });
+    });
+
+    document.getElementById('btn_auto_active').addEventListener('click', function () {
+        var user;
+        user = document.getElementById('user').value;
+        $.ajax({
+            url: 'change_status.php',
+            type: 'POST',
+            data: {
+                'newStatus' : 0,
+                'user' : user
+            },
+            success: function(response) {
+                console.log(response);
+                alert('L\'entraînement automatique a été désactivé.');
+                window.location.href = 'predeecta.php';
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Une erreur est survenue lors du changement de statut. Veuillez réessayer.');
+            }
+        });
+    });
+
+    document.getElementById('btn_auto_desactive').addEventListener('click', function () {
+        var user;
+        user = document.getElementById('user').value;
+        $.ajax({
+            url: 'change_status.php',
+            type: 'POST',
+            data: {
+                'newStatus' : 1,
+                'user' : user
+            },
+            success: function(response) {
+                console.log(response);
+                alert('L\'entraînement automatique a été activé. Il aura lieu chaque jour à 04:00 du matin.');
+                window.location.href = 'predeecta.php';
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Une erreur est survenue lors du changement de statut. Veuillez réessayer.');
             }
         });
     });

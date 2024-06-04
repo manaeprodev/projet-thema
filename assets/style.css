@@ -64,7 +64,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     border-radius: 3px;
 }
 
-input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn-delete-account {
+input[type="submit"], #btn_valider, #btn_ecouter_ia, #btn_ecouter_ia_pred, #btn_auto_active, #btn_auto_desactive, #deco, #btn_entrainer, .btn-delete-account {
     margin-top: 10px;
     width: 80%;
     background: -webkit-linear-gradient(left, rgba(0, 68, 148, 0.5), rgba(0, 162, 217, 0.5), rgba(255, 255, 255, 0.5), rgba(226, 0, 26, 0.5));
@@ -80,7 +80,7 @@ input[type="submit"], #btn_valider, #btn_ecouter_ia, #deco, #btn_entrainer, .btn
             1px  1px 0 #bebebe;
 }
 
-input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #btn_ecouter_ia_pred:hover, #deco:hover, #btn_entrainer:hover, .btn-delete-account:hover {
+input[type="submit"]:hover, #btn_valider:hover, #btn_ecouter_ia:hover, #btn_ecouter_ia_pred:hover, #btn_auto_active:hover, #btn_auto_desactive:hover, #deco:hover, #btn_entrainer:hover, .btn-delete-account:hover {
     background: -webkit-linear-gradient(left, #004494, #00A2D9, #eaeaea, #E2001A);
 }
 
@@ -367,6 +367,11 @@ dd {
         padding: 0;
         font-size: 9px;
     }
+
+    #predeecta_img {
+        width: 100px;
+        height: 100px;
+    }
 }
 
 .guessed_ball {
@@ -415,4 +420,21 @@ table td:first-child {
 table td:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+#predeecta_img {
+    width: 150px;
+    height: 150px;
+}
+
+.no-border-table {
+    border-collapse: collapse;
+}
+
+.no-border-td {
+    border: none;
+}
+
+.p-left {
+    text-align: right;
 }
