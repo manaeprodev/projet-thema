@@ -110,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p>Quand cette option est activée, l'IA sera entraînée automatiquement tous les jours à 04:00 du matin.</p>
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['id']?>" hidden>
 
-    <button id='btn_auto_active' type='button' <?php if ($status[1] === 0) {echo "hidden";} ?>>ACTIF</button>
-    <button id='btn_auto_desactive' type='button' <?php if ($status[1] === 1) {echo "hidden";} ?>>INACTIF</button>
+    <button id='btn_auto_active' class="<?php if ($status[1] === 0) {echo "hidden_btn";}?>" type='button'>ACTIF</button>
+    <button id='btn_auto_desactive' class="<?php if ($status[1] === 0) {echo "hidden_btn";}?>" type='button'>INACTIF</button>
     <p>Dernière modification par <?=$status[4]?><br>le <?=$status[2]?></p>
 
 </div>

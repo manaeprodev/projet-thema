@@ -476,3 +476,7 @@ table td:last-child {
     color: #3c733a;
     background: -webkit-linear-gradient(right, rgb(191, 255, 196), #e1f0db);
 }
+
+.hidden_btn {
+    display: none;
+}
