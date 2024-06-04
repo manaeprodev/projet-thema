@@ -438,3 +438,39 @@ table td:last-child {
 .p-left {
     text-align: right;
 }
+
+#btn_auto_active {
+    border: 2px solid #37e326;
+    color: #3c733a;
+    background: -webkit-linear-gradient(right, rgb(191, 255, 196), #e1f0db);
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#btn_auto_desactive {
+    border: 2px solid #fe4141;
+    color: #733a3a;
+    background: -webkit-linear-gradient(right, rgb(255, 191, 191), #f0dbdb);
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#btn_auto_active:hover {
+    background: -webkit-linear-gradient(right, rgb(44, 93, 33), #0d3d02);
+    content: 'DÉSACTIVER';
+}
+
+#btn_auto_desactive {
+    background: -webkit-linear-gradient(right, rgb(93, 33, 33), #3d0202);
+    content: 'ACTIVER';
+}

@@ -6,6 +6,7 @@ require '../vendor/autoload.php';
 
 $success = false;
 $newStatus = $_POST['newStatus'];
+$idUser = $_POST['user'];
 
 try {
     changeAutoTrainStatus($newStatus);
@@ -14,6 +15,8 @@ try {
     $success = false;
 }
 
-if ($success) {
-    //change in DB
-}
+//Surrond with if success later...
+$requete = "INSERT INTO ia_status (status,  id_user) VALUES (?, ?)";
+$stmt = $connexion->prepare($requete);
+$stmt->bind_param('ii', $newStatus, $idUser);
+$stmt->execute();

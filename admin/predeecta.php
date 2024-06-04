@@ -3,6 +3,8 @@
 require("../components/connexion.php");
 require "jobs/gcloud_data_processor.php";
 
+session_start();
+
 $requete = "SELECT 1 FROM ia_predictions WHERE DATE(dt_prediction) = CURDATE() LIMIT 1";
 $stmt = $connexion->prepare($requete);
 $stmt->execute();

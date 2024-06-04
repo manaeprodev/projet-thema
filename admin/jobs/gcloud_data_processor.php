@@ -1,7 +1,7 @@
 <?php
 
 use Google\Cloud\Storage\StorageClient;
-use Google\Cloud\Scheduler\CloudSchedulerClient;
+use Google\Cloud\Scheduler\SchedulerClient;
 
 function getData($date, $bucket, $ext)
 {
@@ -143,7 +143,7 @@ function changeAutoTrainStatus($newStatus) {
     $location = 'europe-west2';
     $taskId = 'train_ai';
 
-    $schedulerClient = new CloudSchedulerClient([
+    $schedulerClient = new SchedulerClient([
         'projectId' => $projectId,
         'keyFile' => json_decode(file_get_contents('admin/'.getenv('GOOGLE_KEY_DIR')), true)
     ]);
@@ -151,9 +151,9 @@ function changeAutoTrainStatus($newStatus) {
     $task = $schedulerClient->task($location, $taskId);
 
     if ($newStatus === 0) {
-        $task->setState(CloudSchedulerClient::STATE_PAUSED);
+        $task->setState(SchedulerClient::STATE_PAUSED);
     } elseif ($newStatus === 1) {
-        $task->setState(CloudSchedulerClient::STATE_RUNNING);
+        $task->setState(SchedulerClient::STATE_RUNNING);
     }
 
     $task->update();
