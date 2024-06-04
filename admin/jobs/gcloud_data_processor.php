@@ -1,6 +1,7 @@
 <?php
 
 use Google\Cloud\Storage\StorageClient;
+use Google\Cloud\Scheduler\CloudSchedulerClient;
 
 function getData($date, $bucket, $ext)
 {
@@ -132,4 +133,28 @@ function checkData($normalBalls) {
     }
 
     return $valeursUniques;
+}
+
+function changeAutoTrainStatus($newStatus) {
+
+    require 'auth.php';
+
+    $projectId = 'predeect-410808';
+    $location = 'europe-west2';
+    $taskId = 'train_ai';
+
+    $schedulerClient = new CloudSchedulerClient([
+        'projectId' => $projectId,
+        'keyFile' => json_decode(file_get_contents('admin/'.getenv('GOOGLE_KEY_DIR')), true)
+    ]);
+
+    $task = $schedulerClient->task($location, $taskId);
+
+    if ($newStatus === 0) {
+        $task->setState(CloudSchedulerClient::STATE_PAUSED);
+    } elseif ($newStatus === 1) {
+        $task->setState(CloudSchedulerClient::STATE_RUNNING);
+    }
+
+    $task->update();
 }
