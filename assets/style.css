@@ -466,11 +466,13 @@ table td:last-child {
 }
 
 #btn_auto_active:hover {
-    background: -webkit-linear-gradient(right, rgb(44, 93, 33), #0d3d02);
-    content: 'DÉSACTIVER';
+    border: 2px solid #fe4141;
+    color: #733a3a;
+    background: -webkit-linear-gradient(right, rgb(255, 191, 191), #f0dbdb);
 }
 
-#btn_auto_desactive {
-    background: -webkit-linear-gradient(right, rgb(93, 33, 33), #3d0202);
-    content: 'ACTIVER';
+#btn_auto_desactive:hover {
+    border: 2px solid #37e326;
+    color: #3c733a;
+    background: -webkit-linear-gradient(right, rgb(191, 255, 196), #e1f0db);
 }

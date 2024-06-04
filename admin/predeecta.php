@@ -109,14 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Entraînement automatique</h2>
     <p>Quand cette option est activée, l'IA sera entraînée automatiquement tous les jours à 04:00 du matin.</p>
     <input id="user" type="submit" value="<?= $_SESSION['user'][0]['id']?>" hidden>
-    <?php
-    if ($status[1] === 1) {
-        echo "<button id='btn_auto_active' type='button'>Activé</button>";
-        echo "<p>Dernière modification par $status[4]<br>le $status[2]</p>";
-    } elseif ($status[1] === 0) {
-        echo "<button id='btn_auto_desactive' type='button'>Désactivé</button>";
-    }
-    ?>
+
+    <button id='btn_auto_active' type='button' <?php if ($status[1] === 0) {echo "hidden";} ?>>ACTIF</button>
+    <button id='btn_auto_desactive' type='button' <?php if ($status[1] === 1) {echo "hidden";} ?>>INACTIF</button>
+    <p>Dernière modification par <?=$status[4]?><br>le <?=$status[2]?></p>
 
 </div>
 
