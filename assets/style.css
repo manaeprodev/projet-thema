@@ -478,5 +478,5 @@ table td:last-child {
 }
 
 .hidden_btn {
-    display: none;
+    display: none !important;
 }
