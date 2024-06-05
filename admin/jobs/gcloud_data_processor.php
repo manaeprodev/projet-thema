@@ -3,6 +3,7 @@
 use Google\Cloud\Storage\StorageClient;
 use Google\Cloud\Scheduler\V1\CloudSchedulerClient;
 use Google\Cloud\Scheduler\V1\Job\State;
+use Google\Protobuf\FieldMask;
 
 function getData($date, $bucket, $ext)
 {
@@ -139,10 +140,13 @@ function checkData($normalBalls) {
     return $valeursUniques;
 }
 
-function changeAutoTrainStatus($newStatus) {
-    $client = new CloudSchedulerClient([
-        'keyFile' => json_decode(file_get_contents(getenv('GOOGLE_KEY_DIR')), true)
-    ]);
+function changeAutoTrainStatus($newStatus)
+{
+    $fieldMask = new FieldMask();
+    $fieldMask->setPaths(["state"]);
+
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=' . getenv('GOOGLE_APPLICATION_CREDENTIALS'));
+    $client = new CloudSchedulerClient();
 
     $jobName = $client->jobName('predeect-410808', 'europe-west2', 'train_ai');
 
@@ -155,11 +159,15 @@ function changeAutoTrainStatus($newStatus) {
         } elseif ($newStatus === 1) {
             $job->setState(State::ENABLED);
         }
+        echo get_class($job);
+        $updatedJob = $client->updateJob($job, $fieldMask);
+        var_dump($updatedJob);
 
-        $updatedJob = $client->updateJob($job);
+        echo "Statut du job changé : " . $updatedJob->getName();
 
     } catch (Exception $e) {
-        echo "Error resuming job: " . $e->getMessage() . "\n";
+        var_dump($e);
+        echo "Erreur lors du changement de statut: " . $e->getMessage() . "\n";
     } finally {
         $client->close();
     }
