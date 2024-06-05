@@ -262,7 +262,7 @@ $normalBallsData = checkData($normalBallsData);
             selectedRegularBalls = document.querySelectorAll('.selected.regular');
             selectedChanceBalls = document.querySelectorAll('.selected.chance');
             if (selectedRegularBalls.length !== MAX_REGULAR_BALLS
-                && selectedChanceBalls.length !== MAX_CHANCE_BALLS) {
+                || selectedChanceBalls.length !== MAX_CHANCE_BALLS) {
                 error = 1;
                 alert('Veuillez sélectionner 5 numéros ainsi qu\'1 numéro chance.');
             } else {

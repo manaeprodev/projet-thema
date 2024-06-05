@@ -12,9 +12,9 @@ if ($_GET['secureKey'] == getenv('SYNCHRO_SECURE_KEY')) {
     $normalBallsData = checkData($normalBallsData);
 
     $normalBallsString = implode(',', $normalBallsData);
-    $allBallsString = $normalBallsString . $chanceBallData[0];
+    $allBallsString = $normalBallsString . "," .$chanceBallData[0];
 
-    $requete = "INSERT INTO ia_status (vl_prediction) VALUES (?)";
+    $requete = "INSERT INTO ia_predictions (vl_prediction) VALUES (?)";
     $stmt = $connexion->prepare($requete);
     $stmt->bind_param('s', $allBallsString);
     $stmt->execute();

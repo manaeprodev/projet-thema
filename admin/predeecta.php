@@ -96,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($nbLignes === 1) {
         echo "<p>Predeecta s'est déjà entraînée aujourd'hui...</p>";
         echo "<p>Revenez demain !</p>";
+        echo "<button id='btn_entrainer' class='hidden_btn' type='button'>Entraîner Predeecta !</button>";
     } else {
         echo "<button id='btn_entrainer' type='button'>Entraîner Predeecta !</button>";
         echo "<p>Cette action peut prendre un certain temps en fonction de la dernière configuration.</p>";

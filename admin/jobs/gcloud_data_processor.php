@@ -1,7 +1,8 @@
 <?php
 
 use Google\Cloud\Storage\StorageClient;
-//use Google\Cloud\Scheduler\SchedulerClient;
+use Google\Cloud\Scheduler\V1\CloudSchedulerClient;
+use Google\Cloud\Scheduler\V1\Job\State;
 
 function getData($date, $bucket, $ext)
 {
@@ -117,16 +118,19 @@ function checkData($normalBalls) {
 
     foreach ($normalBalls as $valeur) {
         $ogValeur = $valeur;
+        if ($valeur === 0) {
+            $valeur++;
+        }
         if (!in_array($valeur, $valeursUniques)) {
             $valeursUniques[] = $valeur;
         } else {
-            do {
+            while (in_array($valeur, $valeursUniques)) {
                 if ($ogValeur >= 25) {
                     $valeur--;
                 } else {
                     $valeur++;
                 }
-            } while (in_array($valeur, $valeursUniques));
+            }
 
             $valeursUniques[] = $valeur;
         }
@@ -136,25 +140,27 @@ function checkData($normalBalls) {
 }
 
 function changeAutoTrainStatus($newStatus) {
-//
-//    require 'auth.php';
-//
-//    $projectId = 'predeect-410808';
-//    $location = 'europe-west2';
-//    $taskId = 'train_ai';
-//
-//    $schedulerClient = new SchedulerClient([
-//        'projectId' => $projectId,
-//        'keyFile' => json_decode(file_get_contents('admin/'.getenv('GOOGLE_KEY_DIR')), true)
-//    ]);
-//
-//    $task = $schedulerClient->task($location, $taskId);
-//
-//    if ($newStatus === 0) {
-//        $task->setState(SchedulerClient::STATE_PAUSED);
-//    } elseif ($newStatus === 1) {
-//        $task->setState(SchedulerClient::STATE_RUNNING);
-//    }
-//
-//    $task->update();
+    $client = new CloudSchedulerClient([
+        'keyFile' => json_decode(file_get_contents(getenv('GOOGLE_KEY_DIR')), true)
+    ]);
+
+    $jobName = $client->jobName('predeect-410808', 'europe-west2', 'train_ai');
+
+    try {
+        // Get the job
+        $job = $client->getJob($jobName);
+
+        if ($newStatus === 0) {
+            $job->setState(State::PAUSED);
+        } elseif ($newStatus === 1) {
+            $job->setState(State::ENABLED);
+        }
+
+        $updatedJob = $client->updateJob($job);
+
+    } catch (Exception $e) {
+        echo "Error resuming job: " . $e->getMessage() . "\n";
+    } finally {
+        $client->close();
+    }
 }
